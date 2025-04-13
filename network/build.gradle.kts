@@ -45,6 +45,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.network.converter)
     implementation(libs.network.okhttp3)
+    implementation(libs.retrofit.gson)
+    implementation(libs.gson)
+    implementation(libs.okhttp.logging.interceptor)
+
+
     //DI
     implementation(libs.koin.core)
 
