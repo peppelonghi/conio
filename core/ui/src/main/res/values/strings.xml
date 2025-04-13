@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_msg_error">Ops... Something went wrong</string>
+    <string name="error_loading_img">Ops... I cannot loading img</string>
+    <string name="value_eur">%1.2f  €</string>
+</resources>
