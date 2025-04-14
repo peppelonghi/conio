@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">Home</string>
+    <string name="crypto">Crypto: %1s</string>
+    <string name="value_eur">%1.2f  €</string>
+
+</resources>

@@ -1,4 +1,4 @@
-package com.giuseppe_longhitano.baseproject.coin_list
+package com.giuseppe_longhitano.features.coins.coin_list
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +13,7 @@ import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.giuseppe_longhitano.arch.NavigationEvent
-import com.giuseppe_longhitano.baseproject.routing.RouteScreen
+import com.giuseppe_longhitano.features.coins.routing.RouteScreen
 
 import com.giuseppe_longhitano.ui.view.BaseScreen
 
@@ -22,13 +22,19 @@ private const val TAG = "CoinListScreen"
 @Composable
 fun CoinListScreen(
     modifier: Modifier = Modifier,
-    coinViewModel: CoinViewModel = koinViewModel(),
+    coinsListViewModel: CoinsListViewModel = koinViewModel(),
     handleEvent: (NavigationEvent) -> Unit
 ) {
-    val state by coinViewModel.uiState.collectAsStateWithLifecycle()
+    val state by coinsListViewModel.uiState.collectAsStateWithLifecycle()
     CoinListScreen(modifier, state, handleEvent = {
         when (it) {
-            is CoinListEvent.ClickedCoin -> handleEvent.invoke(NavigationEvent(RouteScreen.CoinDetailScreen(it.id.value)))
+            is CoinListEvent.ClickedCoin -> handleEvent.invoke(
+                NavigationEvent(
+                    RouteScreen.CoinDetailScreen(
+                        it.id.value
+                    )
+                )
+            )
         }
     }
     )

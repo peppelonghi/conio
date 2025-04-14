@@ -1,4 +1,4 @@
-package com.giuseppe_longhitano.baseproject.coin_list
+package com.giuseppe_longhitano.features.coins.coin_list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.giuseppe_longhitano.domain.model.Coin
-import com.giuseppe_longhitano.ui.R
+import com.giuseppe_longhitano.features.R
 import com.giuseppe_longhitano.ui.view.LoadingImageView
 
 @Composable

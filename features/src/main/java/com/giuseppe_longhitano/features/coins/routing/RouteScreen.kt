@@ -1,4 +1,4 @@
-package com.giuseppe_longhitano.baseproject.routing
+package com.giuseppe_longhitano.features.coins.routing
 
 import android.util.Log
 import androidx.compose.material.icons.Icons

@@ -14,7 +14,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -23,16 +22,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
+ import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.giuseppe_longhitano.arch.NavigationEvent
+import com.giuseppe_longhitano.arch.routing.Back
 import com.giuseppe_longhitano.arch.routing.Route
-import com.giuseppe_longhitano.baseproject.routing.RouteScreen.CoinDetailScreen
-import com.giuseppe_longhitano.baseproject.coin_details.CoinDetailsScreen
-import com.giuseppe_longhitano.baseproject.coin_list.CoinListScreen
-import com.giuseppe_longhitano.baseproject.routing.RouteScreen
-import com.giuseppe_longhitano.baseproject.routing.RouteScreen.CoinListScreen
+import com.giuseppe_longhitano.features.coins.coinFeatureGraph
+import com.giuseppe_longhitano.features.coins.coin_details.CoinDetailsScreen
+
+import com.giuseppe_longhitano.features.coins.coin_list.CoinListScreen
+import com.giuseppe_longhitano.features.coins.routing.RouteScreen.CoinDetailScreen
+import com.giuseppe_longhitano.features.coins.routing.RouteScreen.CoinListScreen
 import com.giuseppe_longhitano.ui.theme.ConioProjectTheme
 import com.giuseppe_longhitano.ui.ui_model.TopAppBarState
 import com.giuseppe_longhitano.ui.view.ConioTopAppBar
@@ -72,28 +74,14 @@ fun App() {
                     navController = navController,
                     startDestination = CoinListScreen
                 ) {
-                    composable<CoinListScreen> {
-                        topAppBarState = topAppBarState.copy(
-                            title = stringResource(R.string.home),
-                            onNavigationIconClick = { },
-                            navigationIcon = Icons.Default.Home
-                        )
-                        CoinListScreen(
-                            handleEvent = { event ->
-                                navController.navigate(event.dest)
-                            },
-                        )
-                    }
-                    composable<CoinDetailScreen>
-                    { backStackEntry ->
-                        val id = backStackEntry.toRoute<CoinDetailScreen>().id
-                        topAppBarState = topAppBarState.copy(
-                            title = id,
-                            onNavigationIconClick = { navController.popBackStack() },
-                            navigationIcon = Icons.AutoMirrored.Default.ArrowBack
-                        )
-                        CoinDetailsScreen {}
-                    }
+                    coinFeatureGraph(onChangeTopBarState = {top->
+                        topAppBarState = top
+                    }, onNavigationEvent = {route->
+                        when(route) {
+                            is Back -> navController.popBackStack()
+                            else -> navController.navigate(route)
+                        }
+                    })
 
                 }
 
@@ -102,6 +90,8 @@ fun App() {
     }
 
 }
+
+
 
 
 

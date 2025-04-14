@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Conio Project</string>
-    <string name="home">Home</string>
-    <string name="crypto">Crypto: %1s</string>
+
 
 </resources>

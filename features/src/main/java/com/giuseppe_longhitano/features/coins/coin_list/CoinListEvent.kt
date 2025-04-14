@@ -1,4 +1,4 @@
-package com.giuseppe_longhitano.baseproject.coin_list
+package com.giuseppe_longhitano.features.coins.coin_list
 
 import com.giuseppe_longhitano.arch.UIEvent
 import com.giuseppe_longhitano.domain.model.Id

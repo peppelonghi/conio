@@ -1,23 +1,20 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kpt)
     alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
-    namespace = "com.giuseppe_longhitano.baseproject"
+    namespace = "com.giuseppe_longhitano.features"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.giuseppe_longhitano.baseproject"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -64,22 +61,21 @@ dependencies {
 
     //Internal
     implementation(project(":repositories"))
-    implementation(project(":network"))
     implementation(project(":domain"))
     implementation(project(":core:ui"))
     implementation(project(":core:arch"))
-    implementation(project(":features"))
 
     //TEST
-
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.runner)
+    testImplementation(libs.androidx.core.testing)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-
-
 }
