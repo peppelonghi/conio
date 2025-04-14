@@ -26,7 +26,7 @@ fun <T> BaseScreen(
         Box(modifier = modifier) {
             if (isLoading) loadingView()
             if (uiState.error != null) errorView()
-            content()
+            if (uiState.data !=null) content()
         }
     }
 

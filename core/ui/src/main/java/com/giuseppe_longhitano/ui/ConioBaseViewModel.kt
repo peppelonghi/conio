@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 abstract class ConioBaseViewModel<T>(initialData: T?=null): ViewModel(){
 
-    protected val _uiState = MutableStateFlow(UIState(data = initialData, isLoading = true, error = null))
+    protected val _uiState = MutableStateFlow(UIState(data = initialData))
 
     open val uiState: StateFlow<UIState<T>> = _uiState
 

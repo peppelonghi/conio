@@ -10,6 +10,7 @@ import com.giuseppe_longhitano.domain.repositories.CoinRepository
 import com.giuseppe_longhitano.features.coins.routing.RouteScreen
 import com.giuseppe_longhitano.ui.ConioBaseViewModel
 import com.giuseppe_longhitano.ui.ui_model.UIState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -37,6 +38,7 @@ class CoinDetailsViewModel(
 
     private fun getCoinDetails() {
         viewModelScope.launch {
+            delay(2000)
             repository.getCoinDetails(coindId).collect {
                 it.fold(onSuccess = {
                     _uiState.value =
