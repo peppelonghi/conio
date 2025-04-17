@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="chart_height">250.dp</dimen>
+    <dimen name="thumb_size">45.dp</dimen>
+</resources>
