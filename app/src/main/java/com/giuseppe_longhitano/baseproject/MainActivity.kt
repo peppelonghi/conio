@@ -19,9 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import com.giuseppe_longhitano.arch.routing.Back
-import com.giuseppe_longhitano.features.coins.routing.coinFeatureGraph
-
-import com.giuseppe_longhitano.features.coins.routing.RouteScreen.CoinListScreen
+import com.giuseppe_longhitano.coin.routing.RouteScreen
+import com.giuseppe_longhitano.coin.routing.coinFeatureGraph
 import com.giuseppe_longhitano.ui.theme.ConioProjectTheme
 import com.giuseppe_longhitano.ui.ui_model.TopAppBarState
 import com.giuseppe_longhitano.ui.view.widget.ConioTopAppBar
@@ -45,7 +44,6 @@ class MainActivity : ComponentActivity() {
 fun App() {
     val navController = rememberNavController()
     var topAppBarState by remember { mutableStateOf<TopAppBarState>(TopAppBarState()) }
-
     ConioProjectTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -59,7 +57,7 @@ fun App() {
                 NavHost(
                     modifier = Modifier.padding(paddingValues),
                     navController = navController,
-                    startDestination = CoinListScreen
+                    startDestination = RouteScreen.CoinListScreen
                 ) {
                     coinFeatureGraph(onChangeTopBarState = {top->
                         topAppBarState = top
