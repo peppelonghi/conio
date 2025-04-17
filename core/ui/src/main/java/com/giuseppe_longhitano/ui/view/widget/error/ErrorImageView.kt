@@ -1,4 +1,4 @@
-package com.giuseppe_longhitano.ui.view.error
+package com.giuseppe_longhitano.ui.view.widget.error
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning

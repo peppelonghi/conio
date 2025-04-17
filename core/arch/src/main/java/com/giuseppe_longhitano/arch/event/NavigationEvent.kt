@@ -1,4 +1,4 @@
-package com.giuseppe_longhitano.arch
+package com.giuseppe_longhitano.arch.event
 
 import com.giuseppe_longhitano.arch.routing.Route
 

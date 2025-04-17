@@ -1,4 +1,4 @@
-package com.giuseppe_longhitano.ui.view
+package com.giuseppe_longhitano.ui.view.widget
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -7,7 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.SavedStateHandle
 import com.giuseppe_longhitano.ui.ui_model.TopAppBarState
 
 @OptIn(ExperimentalMaterial3Api::class)

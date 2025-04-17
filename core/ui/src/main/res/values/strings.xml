@@ -2,4 +2,8 @@
 <resources>
     <string name="default_msg_error">Ops... Something went wrong</string>
     <string name="error_loading_img">Ops... I cannot loading img</string>
+    <string name="ops_graph">Ops... I cannot load the graph, clickme to retry</string>
+    <string name="retry">Retry</string>
+    <string name="hour_interval">Hour interval</string>
+    <string name="day_interval">Day interval</string>
 </resources>

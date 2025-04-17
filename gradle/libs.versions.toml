@@ -13,10 +13,13 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2025.04.00"
 appcompat = "1.7.0"
+lottie = "6.1.0"
+lottieCompose = "6.1.0"
 material = "1.12.0"
 hilt = "2.48.1"
 jetbrainsKotlinJvm = "2.0.0"
 mockk = "1.13.9"
+mpandroidchart = "v3.1.0"
 retrofit = "2.9.0"
 runner = "1.6.2"
 serialization = "1.9.0"
@@ -53,8 +56,11 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 kotlinx-coroutines-test-v171 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTestVersion" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav-version" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

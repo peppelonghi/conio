@@ -2,6 +2,7 @@ package com.giuseppe_longhitano.features.coins.coin_list
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,11 +12,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import com.giuseppe_longhitano.arch.NavigationEvent
+import com.giuseppe_longhitano.arch.event.NavigationEvent
+import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.features.coins.routing.RouteScreen
+import com.giuseppe_longhitano.ui.R
 
-import com.giuseppe_longhitano.ui.view.BaseScreen
+import com.giuseppe_longhitano.ui.view.widget.base.BaseScreen
 
 private const val TAG = "CoinListScreen"
 
@@ -35,6 +39,7 @@ fun CoinListScreen(
                     )
                 )
             )
+            else -> coinsListViewModel.handleEvent(it)
         }
     }
     )
@@ -43,20 +48,20 @@ fun CoinListScreen(
 
 
 @Composable
-private fun CoinListScreen(
+internal fun CoinListScreen(
     modifier: Modifier = Modifier,
-    state: UIState<List<Coin>>,
-    handleEvent: (CoinListEvent) -> Unit
+    uiState: UIState<List<Coin>>,
+    handleEvent: (UIEvent) -> Unit
 ) {
-    BaseScreen(state, modifier) {
+    BaseScreen(uiState =uiState,modifier = modifier, handleEvent = handleEvent) {
         LazyColumn(
-            contentPadding = PaddingValues(8.dp)
+            contentPadding = PaddingValues(vertical = 8.dp, horizontal = dimensionResource( R.dimen.screen_padding))
         ) {
             items(
-                items = state.data as List<Coin>,
-                key = { item -> item.id.value } // Provide a key
+                items = uiState.data as List<Coin>,
+                key = { item -> item.id.value }
             ) { item ->
-                CoinItem(modifier = Modifier.fillMaxSize(), coin = item, handleEvent = handleEvent)
+                CoinItem(modifier = Modifier, coin = item, handleEvent = handleEvent)
             }
         }
     }

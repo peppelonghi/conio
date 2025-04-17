@@ -6,6 +6,54 @@ plugins {
 
 }
 
+val resourcesToManage = listOf(
+    Pair("strings.xml", "values"),
+    Pair("dimens.xml", "values"),
+    Pair("", "drawable"),
+)
+
+val copyTasks = resourcesToManage.map { (fileName, directory) ->
+    val copyTaskName = "duplicate${directory.capitalize()}${
+        if (fileName.isNotEmpty()) fileName.capitalize().removeSuffix(".xml") else ""
+    }"
+    tasks.register<Copy>(copyTaskName) {
+        group = "verification"
+        description = "Duplicates $fileName from main to androidTest resources."
+        from("src/main/res/$directory${if (fileName.isNotEmpty()) "/$fileName" else ""}")
+        into("src/androidTest/res/$directory")
+        if (fileName.isNotEmpty()) {
+            rename { _ -> fileName }
+        }
+    }
+}
+
+val deleteTasks = resourcesToManage.map { (fileName, directory) ->
+    val deleteTaskName = "removeDuplicate${directory.capitalize()}${
+        if (fileName.isNotEmpty()) fileName.capitalize().removeSuffix(".xml") else ""
+    }"
+    tasks.register<Delete>(deleteTaskName) {
+        group = "verification"
+        description = "Removes duplicated $fileName from androidTest resources."
+        if (fileName.isNotEmpty()) {
+            delete("src/androidTest/res/$directory/$fileName")
+        } else {
+            delete(fileTree("src/androidTest/res/$directory"))
+        }
+    }
+}
+
+tasks.register("copyTestResources") {
+    group = "verification"
+    description = "Copies test resources (strings, drawables, dimens)."
+    dependsOn(copyTasks)
+}
+
+tasks.register("removeTestResources") {
+    group = "verification"
+    description = "Removes test resources (strings, drawables, dimens)."
+    dependsOn(deleteTasks)
+}
+
 android {
     namespace = "com.giuseppe_longhitano.features"
     compileSdk = 35
@@ -52,10 +100,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.koin.compose)
     implementation(libs.navigation.compose)
-
-    //utils
     implementation(libs.kotlinx.serialization.json)
-
+    implementation(libs.mpandroidchart)
     //DI
     implementation(libs.koin.core)
 

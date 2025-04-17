@@ -1,19 +1,20 @@
-package com.giuseppe_longhitano.features.coins
+package com.giuseppe_longhitano.features.coins.routing
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toUpperCase
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.giuseppe_longhitano.arch.routing.Back
 import com.giuseppe_longhitano.arch.routing.Route
 import com.giuseppe_longhitano.features.R
-import com.giuseppe_longhitano.features.coins.coin_details.CoinDetailsScreen
+import com.giuseppe_longhitano.features.coins.coin_details.view.CoinDetailsScreen
 import com.giuseppe_longhitano.features.coins.coin_list.CoinListScreen
 import com.giuseppe_longhitano.features.coins.routing.RouteScreen.CoinDetailScreen
 import com.giuseppe_longhitano.features.coins.routing.RouteScreen.CoinListScreen
@@ -44,7 +45,7 @@ fun NavGraphBuilder.coinFeatureGraph(
         val id = backStackEntry.toRoute<CoinDetailScreen>().id
         onChangeTopBarState.invoke(
             TopAppBarState(
-                title = id,
+                title = stringResource(R.string.crypto, id.toUpperCase(Locale.current)),
                 onNavigationIconClick = {
                     onNavigationEvent.invoke(Back)
                 },
@@ -53,7 +54,6 @@ fun NavGraphBuilder.coinFeatureGraph(
         )
 
         CoinDetailsScreen(
-            modifier = Modifier.fillMaxSize(),
-        ) {}
+         ) {}
     }
 }

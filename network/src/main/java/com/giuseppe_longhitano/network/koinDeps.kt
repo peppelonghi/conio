@@ -36,9 +36,7 @@ val networkModule = module {
         val gson: Gson = GsonBuilder().create()
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL) // Access it directly here
-
             .addConverterFactory(GsonConverterFactory.create(gson)) // Use Gson converter
-
             .client(get()) // Inject OkHttpClient
             .build()
     }

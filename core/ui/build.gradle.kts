@@ -49,10 +49,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.material3.android)
     implementation(libs.coil.kt.compose)
+    implementation(libs.mpandroidchart)
 
     //utils
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.lottie.compose)
+
     implementation(project(":core:arch"))
+    implementation(project(":domain"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

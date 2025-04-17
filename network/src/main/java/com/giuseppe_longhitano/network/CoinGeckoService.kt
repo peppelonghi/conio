@@ -1,5 +1,6 @@
 package com.giuseppe_longhitano.network
 
+import com.giuseppe_longhitano.network.model.ChartResponseDTO
 import com.giuseppe_longhitano.network.model.CoinDTO
 import com.giuseppe_longhitano.network.model.CoinDetailsDTO
 import retrofit2.http.GET
@@ -21,4 +22,12 @@ interface CoinGeckoService {
     suspend fun getCoinsDetails(
         @Path("id") id: String,
     ): CoinDetailsDTO
+
+    @GET(CHARTS)
+    suspend fun getChartData(
+        @Path("id") id: String,
+        @Query("vs_currency") currency: String = "eur",
+        @Query("days") days: String =  "30",
+        @Query("interval") interval: String = "daily"
+    ): ChartResponseDTO
 }

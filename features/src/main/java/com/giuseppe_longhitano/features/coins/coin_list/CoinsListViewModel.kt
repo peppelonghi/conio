@@ -1,7 +1,8 @@
 package com.giuseppe_longhitano.features.coins.coin_list
 
 import androidx.lifecycle.viewModelScope
-import com.giuseppe_longhitano.arch.UIEvent
+import com.giuseppe_longhitano.arch.event.CommonEvent
+import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.domain.repositories.CoinRepository
 import com.giuseppe_longhitano.ui.ConioBaseViewModel
@@ -27,10 +28,14 @@ class CoinsListViewModel(private val repository: CoinRepository) : ConioBaseView
     )
 
     override fun handleEvent(uiEvent: UIEvent) {
+        when(uiEvent) {
+            is CommonEvent.Retry-> getCoins()
+        }
     }
 
 
     private fun getCoins() {
+        _uiState.value = UIState(data = _uiState.value.data, isLoading = true, error = null)
         viewModelScope.launch {
             repository.getCoin().collect {
                 it.fold(onSuccess = { items ->
@@ -39,7 +44,6 @@ class CoinsListViewModel(private val repository: CoinRepository) : ConioBaseView
                 }, onFailure = {
                     _uiState.value =
                         UIState(data = _uiState.value.data, isLoading = false, error = it)
-
                 })
             }
         }
