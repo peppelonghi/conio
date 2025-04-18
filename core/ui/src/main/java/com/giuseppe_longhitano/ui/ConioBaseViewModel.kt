@@ -14,4 +14,6 @@ abstract class ConioBaseViewModel<T>(initialData: T?=null): ViewModel(){
 
     abstract fun handleEvent(uiEvent: UIEvent)
 
+
+
 }

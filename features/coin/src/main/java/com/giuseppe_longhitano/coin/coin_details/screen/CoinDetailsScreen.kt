@@ -77,16 +77,8 @@ internal fun CoinDetailsScreen(
                 handleEvent = {
                     val event = when (it) {
                         is CommonEvent.Retry -> CoinDetailsEvent.RefreshGraph
-                        is ChartEvent.OnIntervalChange -> CoinDetailsEvent.OnIntervalChange(
-                            HourInterval.safeValueOf(it.hourInterval)
-                        )
-
-                        is ChartEvent.OnDaysChange -> CoinDetailsEvent.OnIntervalChange(
-                            HourInterval.safeValueOf(
-                                it.dayInterval
-                            )
-                        )
-
+                        is ChartEvent.OnIntervalChange -> CoinDetailsEvent.OnIntervalChange(HourInterval.safeValueOf(it.hourInterval))
+                        is ChartEvent.OnDaysChange -> CoinDetailsEvent.OnDaysChange(DayInterval.safeValueOf(it.dayInterval))
                         else -> it
                     }
                     handleEvent.invoke(event)

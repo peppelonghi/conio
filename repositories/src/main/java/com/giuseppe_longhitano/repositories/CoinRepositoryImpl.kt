@@ -22,6 +22,8 @@ import kotlin.text.orEmpty
 private const val TAG = "CoinRepositoryImpl"
 
 internal class CoinRepositoryImpl(private val service: CoinGeckoService) : CoinRepository {
+    var prova = 0
+
     override suspend fun getCoin(): Flow<Result<List<Coin>>> =
         flow {
             emit(Result.success(service.getCoins().map { it.toCoin() }))
@@ -45,10 +47,16 @@ internal class CoinRepositoryImpl(private val service: CoinGeckoService) : CoinR
 
     override suspend fun getChart(id: Id, dayInterval: String, hourInterval: String): Flow<Result<Chart>> =
         flow {
+            Log.d(TAG, "getChart() called dayInterval $dayInterval")
+            Log.d(TAG, "getChart() called hourInterval $hourInterval")
+            val result = service.getChartData(id.value)
+            Log.d(TAG, "getChart() called prova = ${prova} result ${result.prices.takeLast(10)}")
+            prova=prova+1
             emit(
-                Result.success(service.getChartData(id.value).toChart().copy(hourInterval = hourInterval, dayInterval = dayInterval))
+                Result.success(result.toChart().copy(hourInterval = hourInterval, dayInterval = dayInterval))
             )
         }.catch {
+            Log.d(TAG, "getChart() called prova = ${prova} $it")
             emit(Result.failure(it))
         }
 

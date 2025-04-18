@@ -11,9 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.zIndex
+import com.giuseppe_longhitano.arch.event.CommonEvent
 import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.ui.R
 import com.giuseppe_longhitano.ui.ui_model.UIState
+import com.giuseppe_longhitano.ui.view.widget.chart.ErrorChart
 import com.giuseppe_longhitano.ui.view.widget.error.ErrorMsgView
 
 @Composable
@@ -29,9 +31,11 @@ fun <T> BaseScreen(
 ) {
     with(uiState) {
         Box(modifier = modifier.fillMaxSize()) {
-            if (isLoading) loadingView()
-            if (uiState.error != null) errorView()
-            if (uiState.data !=null) content()
+            when{
+                isLoading -> loadingView()
+                error != null -> errorView()
+                data !=null -> content()
+            }
         }
     }
 

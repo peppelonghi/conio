@@ -63,5 +63,6 @@ internal fun CoinListScreen(
             }
         }
     }
-
 }
+
+
