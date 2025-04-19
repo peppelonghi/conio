@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.giuseppe_longhitano.arch.event.UIEvent
-import com.giuseppe_longhitano.ui.ui_model.UIState
+import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import com.giuseppe_longhitano.ui.view.widget.error.ErrorMsgView
 
 

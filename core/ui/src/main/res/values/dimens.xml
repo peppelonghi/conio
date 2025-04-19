@@ -2,4 +2,5 @@
 <resources>
     <dimen name="chart_height">200.dp</dimen>
     <dimen name="screen_padding">8.dp</dimen>
+    <dimen name="shimmer_item_height">8.dp</dimen>
 </resources>

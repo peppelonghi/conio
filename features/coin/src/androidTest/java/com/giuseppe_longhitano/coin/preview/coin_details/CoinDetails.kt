@@ -11,7 +11,7 @@ import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.domain.model.Id
 import com.giuseppe_longhitano.features.coins.coin_details.view.CoinDetailsScreen
 import com.giuseppe_longhitano.features.coins.coin_details.ui_model.ExpandedCoinDetails
-import com.giuseppe_longhitano.ui.ui_model.UIState
+import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import kotlin.random.Random
 
 @Preview

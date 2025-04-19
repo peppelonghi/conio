@@ -7,7 +7,7 @@ import com.giuseppe_longhitano.domain.model.ChartItem
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.domain.model.Id
-import com.giuseppe_longhitano.ui.ui_model.UIState
+import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import kotlin.random.Random
 
 val mockCoin = Coin(

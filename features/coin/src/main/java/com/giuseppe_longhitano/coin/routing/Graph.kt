@@ -18,15 +18,15 @@ import com.giuseppe_longhitano.coin.coin_list.screen.CoinListScreen
 import com.giuseppe_longhitano.coin.routing.RouteScreen.CoinDetailScreen
 import com.giuseppe_longhitano.coin.routing.RouteScreen.CoinListScreen
 import com.giuseppe_longhitano.features.coin.R
-import com.giuseppe_longhitano.ui.ui_model.TopAppBarState
+import com.giuseppe_longhitano.ui.view.widget.topbar.ui_model.TopAppBarModel
 
 fun NavGraphBuilder.coinFeatureGraph(
-    onChangeTopBarState: (TopAppBarState) -> Unit,
+    onChangeTopBarState: (TopAppBarModel) -> Unit,
     onNavigationEvent: (Route) -> Unit
 ) {
     composable<CoinListScreen> {
         onChangeTopBarState.invoke(
-            TopAppBarState(
+            TopAppBarModel(
                 title = stringResource(R.string.home),
                 onNavigationIconClick = { },
                 navigationIcon = Icons.Default.Home
@@ -44,7 +44,7 @@ fun NavGraphBuilder.coinFeatureGraph(
     { backStackEntry ->
         val id = backStackEntry.toRoute<CoinDetailScreen>().id
         onChangeTopBarState.invoke(
-            TopAppBarState(
+            TopAppBarModel(
                 title = stringResource(R.string.crypto, id.toUpperCase(Locale.current)),
                 onNavigationIconClick = {
                     onNavigationEvent.invoke(Back)

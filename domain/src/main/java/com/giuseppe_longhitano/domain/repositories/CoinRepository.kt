@@ -7,8 +7,11 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface CoinRepository {
-    suspend fun getCoin():Flow<Result<List<Coin>>>
+
+    suspend fun getCoin(page: Int = 1):Flow<Result<List<Coin>>>
+
     suspend fun getCoinDetails(id: Id):Flow<Result<CoinDetails>>
-    suspend fun getChart(id: Id, dayInterval: String, hourInterval: String):Flow<Result<Chart>>
+
+    suspend fun getChart(id: Id,  interval: String):Flow<Result<Chart>>
 
 }

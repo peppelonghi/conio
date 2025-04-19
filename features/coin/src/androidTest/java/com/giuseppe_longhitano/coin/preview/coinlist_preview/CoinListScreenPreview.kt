@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.giuseppe_longhitano.coin.coin_list.screen.CoinListScreen
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.domain.model.Id
- import com.giuseppe_longhitano.ui.ui_model.UIState
+ import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import java.util.UUID
 import kotlin.random.Random.Default.nextDouble
 

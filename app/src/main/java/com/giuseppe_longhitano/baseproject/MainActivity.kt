@@ -22,8 +22,8 @@ import com.giuseppe_longhitano.arch.routing.Back
 import com.giuseppe_longhitano.coin.routing.RouteScreen
 import com.giuseppe_longhitano.coin.routing.coinFeatureGraph
 import com.giuseppe_longhitano.ui.theme.ConioProjectTheme
-import com.giuseppe_longhitano.ui.ui_model.TopAppBarState
-import com.giuseppe_longhitano.ui.view.widget.ConioTopAppBar
+import com.giuseppe_longhitano.ui.view.widget.topbar.ui_model.TopAppBarModel
+import com.giuseppe_longhitano.ui.view.widget.topbar.ConioTopAppBar
 
 
 private const val TAG = "MainActivity"
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            App()
+           App()
         }
     }
 }
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App() {
     val navController = rememberNavController()
-    var topAppBarState by remember { mutableStateOf<TopAppBarState>(TopAppBarState()) }
+    var topAppBarModel by remember { mutableStateOf<TopAppBarModel>(TopAppBarModel()) }
     ConioProjectTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -51,7 +51,7 @@ fun App() {
         ) {
             Scaffold(
                 topBar = {
-                    ConioTopAppBar(topAppBarState)
+                    ConioTopAppBar(topAppBarModel)
                 },
             ) { paddingValues ->
                 NavHost(
@@ -60,7 +60,7 @@ fun App() {
                     startDestination = RouteScreen.CoinListScreen
                 ) {
                     coinFeatureGraph(onChangeTopBarState = {top->
-                        topAppBarState = top
+                        topAppBarModel = top
                     }, onNavigationEvent = {route->
                         when(route) {
                             is Back -> navController.popBackStack()

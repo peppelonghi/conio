@@ -2,7 +2,6 @@ package com.giuseppe_longhitano.coin
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.giuseppe_longhitano.coin.coin_list.screen.CoinsListViewModel
 import com.giuseppe_longhitano.domain.repositories.CoinRepository
 import io.mockk.coEvery
 import io.mockk.mockk

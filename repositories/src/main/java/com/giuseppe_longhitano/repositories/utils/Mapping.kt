@@ -25,14 +25,13 @@ internal fun CoinDetailsDTO.toCoinDetails() =
             symbol = this.symbol,
             name = name,
             urlmage = this.image.large,
-            currentPrice = this.marketData.currentPrice[EUR]?.toDouble()?:0.0
+            currentPrice = this.marketData.currentPrice[EUR]?.toDouble() ?: 0.0
         ),
         description = description.values.firstOrNull() ?: "",
     )
 
 internal fun ChartResponseDTO.toChart() = Chart(
-    hourInterval = "",
-    dayInterval = "",
+    interval = "",
     listChartItems = listOf(
         ChartItem(title = PRICES, item = this.prices),
         ChartItem(title = MarketCaps, item = this.market_caps),

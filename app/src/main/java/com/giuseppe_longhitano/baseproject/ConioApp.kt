@@ -12,7 +12,7 @@ class ConioApp: Application(){
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            modules(repositoriesModule + networkModule + featureCoinModules)
+            modules( repositoriesModule + networkModule + featureCoinModules)
         }
     }
 }

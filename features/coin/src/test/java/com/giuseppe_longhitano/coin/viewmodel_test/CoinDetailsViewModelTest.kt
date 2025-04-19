@@ -7,15 +7,13 @@ import app.cash.turbine.test
 import com.giuseppe_longhitano.arch.event.CommonEvent
 import com.giuseppe_longhitano.coin.coin_details.screen.CoinDetailsEvent
 import com.giuseppe_longhitano.coin.coin_details.screen.CoinDetailsViewModel
-import com.giuseppe_longhitano.coin.utils.DayInterval
-import com.giuseppe_longhitano.coin.utils.HourInterval
+import com.giuseppe_longhitano.ui.view.widget.chart.Interval
 import com.giuseppe_longhitano.domain.model.Chart
 import com.giuseppe_longhitano.domain.model.ChartItem
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.domain.model.Id
 import com.giuseppe_longhitano.domain.repositories.CoinRepository
-import com.giuseppe_longhitano.ui.ui_model.UIState
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -57,8 +55,9 @@ class CoinDetailsViewModelTest {
 
     private val sut by lazy {
         CoinDetailsViewModel(
+            repository = repository,
             savedStateHandle = savedStateHandle,
-            repository = repository
+            prova = prova
         )
     }
 
@@ -194,7 +193,7 @@ class CoinDetailsViewModelTest {
         coVerify(exactly = 2) { repository.getChart(any(), any(), any()) }
         sut.handleEvent(CoinDetailsEvent.OnDaysChange(DayInterval.FOURTEEN_DAYS))
         coVerify(exactly = 3) { repository.getChart(any(), any(), any()) }
-        sut.handleEvent(CoinDetailsEvent.OnIntervalChange(HourInterval.THIRTY_MINUTES))
+        sut.handleEvent(CoinDetailsEvent.OnIntervalChange(Interval.THIRTY_MINUTES))
         coVerify(exactly = 4) { repository.getChart(any(), any(), any()) }
     }
 

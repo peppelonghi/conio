@@ -1,6 +1,5 @@
 package com.giuseppe_longhitano.repositories
 
-import android.accessibilityservice.GestureDescription
 import android.util.Log
 import com.giuseppe_longhitano.domain.model.Chart
 import com.giuseppe_longhitano.domain.model.Coin
@@ -8,8 +7,6 @@ import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.domain.model.Id
 import com.giuseppe_longhitano.domain.repositories.CoinRepository
 import com.giuseppe_longhitano.network.CoinGeckoService
-import com.giuseppe_longhitano.network.model.CoinDTO
-import com.giuseppe_longhitano.network.model.CoinDetailsDTO
 import com.giuseppe_longhitano.repositories.utils.toChart
 import com.giuseppe_longhitano.repositories.utils.toCoin
 import com.giuseppe_longhitano.repositories.utils.toCoinDetails
@@ -22,11 +19,11 @@ import kotlin.text.orEmpty
 private const val TAG = "CoinRepositoryImpl"
 
 internal class CoinRepositoryImpl(private val service: CoinGeckoService) : CoinRepository {
-    var prova = 0
 
-    override suspend fun getCoin(): Flow<Result<List<Coin>>> =
+
+    override suspend fun getCoin(page: Int): Flow<Result<List<Coin>>> =
         flow {
-            emit(Result.success(service.getCoins().map { it.toCoin() }))
+            emit(Result.success(service.getCoins(page = page).map { it.toCoin() }))
         }.catch {
             emit(Result.failure(it))
         }
@@ -45,19 +42,15 @@ internal class CoinRepositoryImpl(private val service: CoinGeckoService) : CoinR
             emit(Result.failure(it))
         }
 
-    override suspend fun getChart(id: Id, dayInterval: String, hourInterval: String): Flow<Result<Chart>> =
+    override suspend fun getChart(id: Id , interval: String): Flow<Result<Chart>> =
         flow {
-            Log.d(TAG, "getChart() called dayInterval $dayInterval")
-            Log.d(TAG, "getChart() called hourInterval $hourInterval")
-            val result = service.getChartData(id.value)
-            Log.d(TAG, "getChart() called prova = ${prova} result ${result.prices.takeLast(10)}")
-            prova=prova+1
+
+            val result = service.getChartData(id = id.value, days =  interval)
             emit(
-                Result.success(result.toChart().copy(hourInterval = hourInterval, dayInterval = dayInterval))
+                Result.success(result.toChart().copy(interval = interval))
             )
         }.catch {
-            Log.d(TAG, "getChart() called prova = ${prova} $it")
-            emit(Result.failure(it))
+             emit(Result.failure(it))
         }
 
 

@@ -10,24 +10,21 @@ import retrofit2.http.Query
 interface CoinGeckoService {
     @GET(MARKET)
     suspend fun getCoins(
-        @Query("vs_currency") currency: String = "eur",
-        @Query("per_page") perPage: Int = 10,
-        @Query("page") page: Int =1,
-        @Query("price_change_percentage") priceChangePercentage: String? = null,
-        @Query("sparkline") sparkline: Boolean? = null
+        @Query(QUERY_PARAM_VS_CURRENCY) currency: String = "eur",
+        @Query(QUERY_PARAM_PER_PAGE) perPage: Int = 10,
+        @Query(QUERY_PARAM_PAGE) page: Int = 1,
     ): List<CoinDTO>
 
 
     @GET(COIN_DETAILS)
     suspend fun getCoinsDetails(
-        @Path("id") id: String,
+        @Path(QUERY_PARAM_ID) id: String,
     ): CoinDetailsDTO
 
     @GET(CHARTS)
     suspend fun getChartData(
-        @Path("id") id: String,
-        @Query("vs_currency") currency: String = "eur",
-        @Query("days") days: String =  "30",
-        @Query("interval") interval: String = "daily"
-    ): ChartResponseDTO
+        @Path(QUERY_PARAM_ID) id: String,
+        @Query(QUERY_PARAM_VS_CURRENCY) currency: String = "eur",
+        @Query(QUERY_PARAM_DAYS) days: String =  "1h",
+     ): ChartResponseDTO
 }

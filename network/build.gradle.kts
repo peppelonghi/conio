@@ -27,6 +27,7 @@ android {
         }
         debug {
             buildConfigField("String", "BASE_URL", "\"https://api.coingecko.com/\"")
+            buildConfigField("String", "API_KEY", "\"CG-dQ1tCKyBuCmjUG1QDX5axrUa\"")
         }
     }
     compileOptions {

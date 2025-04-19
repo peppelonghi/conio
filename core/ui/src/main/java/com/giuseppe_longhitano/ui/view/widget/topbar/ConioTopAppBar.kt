@@ -1,4 +1,4 @@
-package com.giuseppe_longhitano.ui.view.widget
+package com.giuseppe_longhitano.ui.view.widget.topbar
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -7,20 +7,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import com.giuseppe_longhitano.ui.ui_model.TopAppBarState
+import com.giuseppe_longhitano.ui.view.widget.topbar.ui_model.TopAppBarModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConioTopAppBar( topAppBarState: TopAppBarState) {
+fun ConioTopAppBar(topAppBarModel: TopAppBarModel) {
     TopAppBar(
-        title = { Text(text = topAppBarState.title, style = MaterialTheme.typography.titleMedium) },
+        title = { Text(text = topAppBarModel.title, style = MaterialTheme.typography.titleMedium) },
         navigationIcon = {
-            topAppBarState.navigationIcon?.let { icon ->
-                IconButton(onClick = { topAppBarState.onNavigationIconClick?.invoke() }) {
+            topAppBarModel.navigationIcon?.let { icon ->
+                IconButton(onClick = { topAppBarModel.onNavigationIconClick?.invoke() }) {
                     Icon(imageVector = icon, contentDescription = "Back")
                 }
             }
         },
-        actions = topAppBarState.actions,
+        actions = topAppBarModel.actions,
     )
 }
