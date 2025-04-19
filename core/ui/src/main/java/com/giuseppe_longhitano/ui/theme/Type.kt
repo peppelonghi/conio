@@ -1,4 +1,4 @@
-package com.example.baseproject.ui.theme
+package com.giuseppe_longhitano.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -80,12 +80,9 @@ class CoinDetailsViewModel(
             }.collect()
         }
     }
-    var prova: List<List<Double>> = emptyList()
 
      private fun handleResultChart(graphResult: Result<Chart>) {
         graphResult.fold(onSuccess = {
-            Log.d(TAG, "handleResultChart() called with: it = ${it.listChartItems.first().item}")
-            prova = it.listChartItems.first().item
              val current =
                 uiState.getData()?.copy(chart = UIState(data = it, isLoading = false, error = null))
             _uiState.value = uiState.value.copy(data = current, isLoading = false, error = null)

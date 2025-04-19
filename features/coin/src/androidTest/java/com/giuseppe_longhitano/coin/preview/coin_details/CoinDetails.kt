@@ -4,13 +4,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import com.giuseppe_longhitano.coin.coin_details.screen.CoinDetailsScreen
+import com.giuseppe_longhitano.coin.coin_details.screen.ui_model.ExpandedCoinDetails
 import com.giuseppe_longhitano.domain.model.Chart
 import com.giuseppe_longhitano.domain.model.ChartItem
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.domain.model.Id
-import com.giuseppe_longhitano.features.coins.coin_details.view.CoinDetailsScreen
-import com.giuseppe_longhitano.features.coins.coin_details.ui_model.ExpandedCoinDetails
+
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import kotlin.random.Random
 
@@ -86,7 +87,6 @@ private fun createFakeChart(): Chart {
 
     return Chart(
         listChartItems = listChartItems,
-        dayInterval = "1 Day",
-        hourInterval = "1 Hour"
+
     )
 }

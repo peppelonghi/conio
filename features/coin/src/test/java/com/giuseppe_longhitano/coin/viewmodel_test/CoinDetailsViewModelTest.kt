@@ -57,7 +57,7 @@ class CoinDetailsViewModelTest {
         CoinDetailsViewModel(
             repository = repository,
             savedStateHandle = savedStateHandle,
-            prova = prova
+
         )
     }
 
@@ -84,7 +84,7 @@ class CoinDetailsViewModelTest {
             repository.getChart(
                 any(),
                 any(),
-                any()
+
             )
         } returns flowOf(Result.success(mockChart))
         sut.uiState.test {
@@ -104,7 +104,7 @@ class CoinDetailsViewModelTest {
             repository.getChart(
                 any(),
                 any(),
-                any()
+
             )
         } returns flowOf(Result.success(mockChart))
         sut.uiState.test {
@@ -121,7 +121,7 @@ class CoinDetailsViewModelTest {
             repository.getChart(
                 any(),
                 any(),
-                any()
+
             )
         } returns flowOf(Result.failure(Throwable()))
         sut.uiState.test {
@@ -139,7 +139,7 @@ class CoinDetailsViewModelTest {
             repository.getChart(
                 any(),
                 any(),
-                any()
+
             )
         } returns flowOf(Result.success(mockChart))
         coEvery { repository.getCoinDetails(any()) } returns flowOf(Result.success(mockCoin))
@@ -147,7 +147,7 @@ class CoinDetailsViewModelTest {
             repository.getChart(
                 any(),
                 any(),
-                any()
+
             )
         } returns flowOf(Result.success(mockChart))
         sut.uiState.test {
@@ -164,7 +164,7 @@ class CoinDetailsViewModelTest {
             repository.getChart(
                 any(),
                 any(),
-                any()
+
             )
         } returns flowOf(Result.success(mockChart))
         coEvery { repository.getCoinDetails(any()) } returns flowOf(Result.success(mockCoin))
@@ -172,7 +172,7 @@ class CoinDetailsViewModelTest {
             repository.getChart(
                 any(),
                 any(),
-                any()
+
             )
         } returns flowOf(Result.failure(Throwable()))
         sut.uiState.test {
@@ -188,13 +188,11 @@ class CoinDetailsViewModelTest {
     fun `test events`() = runTest {
         sut.handleEvent(CommonEvent.Retry)
         coVerify(exactly = 1) { repository.getCoinDetails(any()) }
-        coVerify(exactly = 1) { repository.getChart(any(), any(), any()) }
+        coVerify(exactly = 1) { repository.getChart(any(), any()  ) }
         sut.handleEvent(CoinDetailsEvent.RefreshGraph)
-        coVerify(exactly = 2) { repository.getChart(any(), any(), any()) }
-        sut.handleEvent(CoinDetailsEvent.OnDaysChange(DayInterval.FOURTEEN_DAYS))
-        coVerify(exactly = 3) { repository.getChart(any(), any(), any()) }
-        sut.handleEvent(CoinDetailsEvent.OnIntervalChange(Interval.THIRTY_MINUTES))
-        coVerify(exactly = 4) { repository.getChart(any(), any(), any()) }
+        coVerify(exactly = 2) { repository.getChart(any(), any()  ) }
+        sut.handleEvent(CoinDetailsEvent.OnIntervalChange(Interval.THREE_MONTHS))
+         coVerify(exactly =3) { repository.getChart(any(), any()) }
     }
 
 
@@ -223,8 +221,8 @@ class CoinDetailsViewModelTest {
 
         return Chart(
             listChartItems = listChartItems,
-            dayInterval = "1 Day",
-            hourInterval = "1 Hour"
+            interval = "1",
+
         )
     }
 }
