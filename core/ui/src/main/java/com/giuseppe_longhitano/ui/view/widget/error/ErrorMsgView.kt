@@ -26,7 +26,12 @@ fun ErrorMsgView(
     handleEvent: (UIEvent) -> Unit
 ) {
     val msg = throwable?.message ?: stringResource(R.string.default_msg_error)
-    Row(modifier.background(Color.Red).padding(vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier
+            .background(Color.Red)
+            .padding(vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Icon(
             modifier = Modifier.weight(0.2f),
             imageVector = Icons.Filled.Warning,
@@ -38,9 +43,11 @@ fun ErrorMsgView(
             text = msg, color = Color.White
         )
         Icon(
-            modifier = Modifier.weight(0.2f).clickable{
-                handleEvent.invoke(CommonEvent.Retry)
-            },
+            modifier = Modifier
+                .weight(0.2f)
+                .clickable {
+                    handleEvent.invoke(CommonEvent.Retry)
+                },
             imageVector = Icons.Filled.Refresh,
             contentDescription = msg,
             tint = Color.White

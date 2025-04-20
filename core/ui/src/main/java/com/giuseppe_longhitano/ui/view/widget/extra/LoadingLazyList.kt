@@ -54,10 +54,8 @@ fun LoadingLazyList() {
 }
 
 
-
-
 @Composable
-  fun LoadingItem(modifier: Modifier = Modifier) {
+fun LoadingItem(modifier: Modifier = Modifier) {
 
     val brushColor = brushColor()
     val color = brushColor().first()
@@ -98,8 +96,19 @@ fun LoadingLazyList() {
                     drawRect(
                         brush = Brush.linearGradient(
                             colors = brushColor,
-                            start = Offset(x = (translateAnimation - (canvasWidth*2)) + (canvasWidth * kotlin.math.sin(Math.toRadians(rotatedAngle.toDouble()).toFloat())), y = (canvasHeight * (1-kotlin.math.cos(Math.toRadians(rotatedAngle.toDouble()).toFloat()))) ),
-                            end = Offset(x = translateAnimation + (canvasWidth * kotlin.math.sin(Math.toRadians(rotatedAngle.toDouble()).toFloat())), y = (canvasHeight)  )
+                            start = Offset(
+                                x = (translateAnimation - (canvasWidth * 2)) + (canvasWidth * kotlin.math.sin(
+                                    Math.toRadians(rotatedAngle.toDouble()).toFloat()
+                                )),
+                                y = (canvasHeight * (1 - kotlin.math.cos(
+                                    Math.toRadians(rotatedAngle.toDouble()).toFloat()
+                                )))
+                            ),
+                            end = Offset(
+                                x = translateAnimation + (canvasWidth * kotlin.math.sin(
+                                    Math.toRadians(rotatedAngle.toDouble()).toFloat()
+                                )), y = (canvasHeight)
+                            )
                         ),
                         size = size,
                         blendMode = BlendMode.DstAtop
@@ -131,8 +140,6 @@ fun brushColor() = listOf(
     MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
     MaterialTheme.colorScheme.primary,
 )
-
-
 
 
 private fun Modifier.shimmerEffect(showShimmer: Boolean = true): Modifier = composed {

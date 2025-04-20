@@ -1,17 +1,17 @@
 package com.giuseppe_longhitano.coin.coin_list.screen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.giuseppe_longhitano.arch.event.NavigationEvent
 import com.giuseppe_longhitano.arch.event.UIEvent
-import com.giuseppe_longhitano.ui.view.widget.base.ui_model.ListModel
 import com.giuseppe_longhitano.coin.routing.RouteScreen
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.ui.view.widget.base.BaseLazyLoadingList
+import com.giuseppe_longhitano.ui.view.widget.base.ui_model.ListModel
+import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
+import org.koin.androidx.compose.koinViewModel
 
 private const val TAG = "CoinListScreen"
 
@@ -48,7 +48,7 @@ internal fun CoinListScreen(
     handleEvent: (UIEvent) -> Unit
 ) {
     BaseLazyLoadingList<Coin>(uiState, modifier, handleEvent) {
-        CoinItem(modifier = Modifier, coin =it, handleEvent = handleEvent)
+        CoinItem(modifier = Modifier, coin = it, handleEvent = handleEvent)
     }
 }
 

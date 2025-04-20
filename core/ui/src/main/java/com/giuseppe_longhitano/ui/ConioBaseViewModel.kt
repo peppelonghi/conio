@@ -6,7 +6,7 @@ import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-abstract class ConioBaseViewModel<T>(initialData: T?=null): ViewModel(){
+abstract class ConioBaseViewModel<T>(initialData: T? = null) : ViewModel() {
 
     protected val _uiState = MutableStateFlow(UIState(data = initialData))
 

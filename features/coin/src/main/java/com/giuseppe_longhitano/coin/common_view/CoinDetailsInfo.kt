@@ -13,7 +13,7 @@ import com.giuseppe_longhitano.features.coin.R
 import com.giuseppe_longhitano.ui.view.widget.extra.LabelValueItem
 
 @Composable
-fun CoinDetailsInfo(modifier : Modifier= Modifier, coinDetails: CoinDetails?) {
+fun CoinDetailsInfo(modifier: Modifier = Modifier, coinDetails: CoinDetails?) {
     coinDetails?.let {
         Card(modifier = modifier) {
             LabelValueItem(

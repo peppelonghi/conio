@@ -25,6 +25,6 @@ interface CoinGeckoService {
     suspend fun getChartData(
         @Path(QUERY_PARAM_ID) id: String,
         @Query(QUERY_PARAM_VS_CURRENCY) currency: String = "eur",
-        @Query(QUERY_PARAM_DAYS) days: String =  "1h",
-     ): ChartResponseDTO
+        @Query(QUERY_PARAM_DAYS) days: String = "1h",
+    ): ChartResponseDTO
 }

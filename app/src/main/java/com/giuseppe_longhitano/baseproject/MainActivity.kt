@@ -10,20 +10,20 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.giuseppe_longhitano.arch.routing.Back
 import com.giuseppe_longhitano.coin.routing.RouteScreen
 import com.giuseppe_longhitano.coin.routing.coinFeatureGraph
 import com.giuseppe_longhitano.ui.theme.ConioProjectTheme
-import com.giuseppe_longhitano.ui.view.widget.topbar.ui_model.TopAppBarModel
 import com.giuseppe_longhitano.ui.view.widget.topbar.ConioTopAppBar
+import com.giuseppe_longhitano.ui.view.widget.topbar.ui_model.TopAppBarModel
 
 
 private const val TAG = "MainActivity"
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-           App()
+            App()
         }
     }
 }
@@ -59,10 +59,10 @@ fun App() {
                     navController = navController,
                     startDestination = RouteScreen.CoinListScreen
                 ) {
-                    coinFeatureGraph(onChangeTopBarState = {top->
+                    coinFeatureGraph(onChangeTopBarState = { top ->
                         topAppBarModel = top
-                    }, onNavigationEvent = {route->
-                        when(route) {
+                    }, onNavigationEvent = { route ->
+                        when (route) {
                             is Back -> navController.popBackStack()
                             else -> navController.navigate(route)
                         }

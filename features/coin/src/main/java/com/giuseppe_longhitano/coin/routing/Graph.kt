@@ -53,7 +53,6 @@ fun NavGraphBuilder.coinFeatureGraph(
             )
         )
 
-        CoinDetailsScreen(
-         ) {}
+        CoinDetailsScreen{}
     }
 }

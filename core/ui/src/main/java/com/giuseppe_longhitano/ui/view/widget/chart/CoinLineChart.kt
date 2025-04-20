@@ -1,16 +1,12 @@
 package com.giuseppe_longhitano.ui.view.widget.chart
 
-import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -27,14 +23,10 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.arch.model.ScaleInfo
 import com.giuseppe_longhitano.domain.model.Chart
-import com.giuseppe_longhitano.domain.model.ChartItem
 import com.giuseppe_longhitano.ui.R
-import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import com.giuseppe_longhitano.ui.view.atomic_view.ChipGroup
 import com.giuseppe_longhitano.ui.view.widget.base.BaseWidget
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.TimeZone
+import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 
 
 private const val TAG = "ConioLineChart"
@@ -57,11 +49,11 @@ fun CoinLineChart(
         content = {
             state?.let {
                 val selected = remember { mutableStateOf<String?>(null) }
-                val items = state.data?.listChartItems.orEmpty()
+                val items = state.data?.itemsChart.orEmpty()
                 val titles = items.map { it.title }
                 val lineColor = MaterialTheme.colorScheme.primary.toArgb()
                 Column {
-                    if (state.data?.listChartItems.orEmpty()
+                    if (state.data?.itemsChart.orEmpty()
                             .isEmpty()
                     ) ErrorChart(modifier = Modifier.fillMaxWidth()) { handleEvent.invoke(it) }
                     else {
@@ -76,26 +68,32 @@ fun CoinLineChart(
                             },
                             update = { chart ->
                                 // Retrieve the data
-                                val timestamp = (if (selected.value == null) items.first() else items.firstOrNull { it.title == selected.value })?.item.orEmpty().map { it[0].toDouble() }
-                                val item =  (if (selected.value == null) items.first() else items.firstOrNull { it.title == selected.value })?.item.orEmpty().map { it[1].toDouble() }
+                                val xValues =
+                                    (if (selected.value == null) items.first() else items.firstOrNull { it.title == selected.value })?.coords.orEmpty()
+                                        .map { it[0].toDouble() }
+                                val yValues =
+                                    (if (selected.value == null) items.first() else items.firstOrNull { it.title == selected.value })?.coords.orEmpty()
+                                        .map { it[1].toDouble() }
 
-                                val scaleInfo = ScaleInfo.determineScale(item)
+                                val scaleInfo = ScaleInfo.determineScale(yValues)
                                 val timestampMap = mutableMapOf<Float, Double>()
 
-                                val entries = item.mapIndexed { index, item ->
+                                val entries = yValues.mapIndexed { index, item ->
                                     val scaledValue = item / scaleInfo.scale
-                                    timestampMap.put(index.toFloat(), timestamp[index])
-                                    Entry(index.toFloat(), item.toFloat())
+                                    timestampMap.put(index.toFloat(), xValues[index])
+                                    Entry(index.toFloat(), scaledValue.toFloat())
                                 }
 
                                 val dataSet = LineDataSet(entries, items.first().title)
                                 dataSet.apply {
                                     color = lineColor
                                     lineWidth = 2f
+                                    valueTextColor = lineColor
                                     setDrawCircles(false)
                                 }
 
                                 chart.apply {
+                                    legend.textColor = lineColor
                                     data = LineData(dataSet)
                                     axisRight.isEnabled = false
 
@@ -123,6 +121,7 @@ fun CoinLineChart(
                                         setGranularity(2f)
                                         textColor = lineColor
                                     }
+                                    setScaleEnabled(true)
                                     setPinchZoom(true)
                                     invalidate()
                                 }
@@ -131,8 +130,10 @@ fun CoinLineChart(
                             items = titles,
                             selectedItem = items.first().title,
                             modifier = Modifier.padding(16.dp),
-                            onItemSelected = {selection->
-                                selected.value = items.firstOrNull { item -> item.title == selection }?.title ?: selected.value
+                            onItemSelected = { selection ->
+                                selected.value =
+                                    items.firstOrNull { item -> item.title == selection }?.title
+                                        ?: selected.value
                             })
                     }
                 }

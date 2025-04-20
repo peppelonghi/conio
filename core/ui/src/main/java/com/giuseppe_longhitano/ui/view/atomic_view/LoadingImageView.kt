@@ -9,14 +9,19 @@ import com.giuseppe_longhitano.ui.view.widget.error.ErrorImageView
 
 
 @Composable
-fun LoadingImageView(modifier: Modifier = Modifier, url: String, errorView: @Composable ()->Unit = { ErrorImageView(modifier = Modifier)}, contentDescription: String? = null) {
+fun LoadingImageView(
+    modifier: Modifier = Modifier,
+    url: String,
+    errorView: @Composable () -> Unit = { ErrorImageView(modifier = Modifier) },
+    contentDescription: String? = null
+) {
     SubcomposeAsyncImage(
         contentScale = ContentScale.Crop,
         modifier = modifier,
         model = url,
         loading = { CircularProgressIndicator() },
         error = { errorView() },
-        contentDescription =  contentDescription
+        contentDescription = contentDescription
     )
 }
 

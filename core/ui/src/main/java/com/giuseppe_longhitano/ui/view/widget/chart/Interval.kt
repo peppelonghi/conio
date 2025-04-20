@@ -24,7 +24,7 @@ enum class Interval(val value: String) {
 
         fun retrieveFormat(interval: Interval): String = when (interval) {
             TWENTY_FOUR_HOURS -> "HH:mm" //  (e.g., Mar 10 14:00)
-            SEVEN_DAYS, ONE_MONTH, THREE_MONTHS,ONE_YEAR -> "dd.MM" // Month and Day (e.g., Mar 10)
+            SEVEN_DAYS, ONE_MONTH, THREE_MONTHS, ONE_YEAR -> "dd.MM" // Month and Day (e.g., Mar 10)
 
         }
 

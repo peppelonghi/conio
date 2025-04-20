@@ -14,8 +14,8 @@ import com.giuseppe_longhitano.ui.R
 fun ErrorImageView(modifier: Modifier) {
     Icon(
         modifier = modifier,
-        imageVector = Icons.Filled.Warning, // The error icon
-        contentDescription = stringResource(R.string.error_loading_img), // For accessibility
-        tint = Color.White // Customize the color
+        imageVector = Icons.Filled.Warning,
+        contentDescription = stringResource(R.string.error_loading_img),
+        tint = Color.White
     )
 }

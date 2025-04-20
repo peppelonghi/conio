@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.giuseppe_longhitano.ui.R
 
 
 enum class Orientation {
@@ -27,6 +29,7 @@ fun LabelValueItem(
     valueColor: Color = MaterialTheme.colorScheme.onSurface,
     orientation: Orientation = Orientation.VERTICAL
 ) {
+
     when (orientation) {
         Orientation.VERTICAL -> Column(modifier = modifier, horizontalAlignment = Alignment.Start) {
             Text(
@@ -35,7 +38,11 @@ fun LabelValueItem(
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(vertical = 4.dp)
             )
-            Text(text = value, color = valueColor, modifier = Modifier.padding(vertical = 4.dp))
+            Text(
+                text = value.takeIf { it.isNotEmpty() } ?: stringResource(R.string.no_info),
+                color = valueColor,
+                modifier = Modifier.padding(vertical = 4.dp)
+            )
         }
 
         Orientation.HORIZONTAL -> Row(
@@ -48,11 +55,18 @@ fun LabelValueItem(
                 text = label,
                 color = labelColor,
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(end = 4.dp).weight(0.5f)
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .weight(0.5f)
             )
             Text(
                 textAlign = TextAlign.End,
-                text = value, color = valueColor, modifier = Modifier.padding(start = 4.dp).weight(0.5f))
+                text = value.takeIf { it.isNotEmpty() } ?: stringResource(R.string.no_info),
+                color = valueColor,
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .weight(0.5f)
+            )
         }
     }
 

@@ -36,7 +36,7 @@ fun <T> BaseWidget(
     content: @Composable BoxScope.() -> Unit
 ) {
     Box(modifier = modifier) {
-        uiState?.let { state->
+        uiState?.let { state ->
             if (state.isLoading) loadingView()
             if (state.error != null) errorView()
             if (state.data != null) content()

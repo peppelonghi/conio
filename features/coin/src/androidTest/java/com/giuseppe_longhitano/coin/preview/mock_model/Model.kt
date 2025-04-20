@@ -55,7 +55,7 @@ private fun createFakeChart(): Chart {
     val listChartItems = (0 until numChartItems).map { createFakeChartItem() }
 
     return Chart(
-        listChartItems = listChartItems,
+        itemsChart = listChartItems,
         dayInterval = "1 Day",
         hourInterval = "1 Hour"
     )

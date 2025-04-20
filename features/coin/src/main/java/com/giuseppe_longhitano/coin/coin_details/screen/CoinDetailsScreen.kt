@@ -22,13 +22,12 @@ import com.giuseppe_longhitano.arch.event.CommonEvent
 import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.coin.coin_details.screen.ui_model.ExpandedCoinDetails
 import com.giuseppe_longhitano.coin.coin_details.view.CoinItemInfo
-import com.giuseppe_longhitano.ui.view.widget.chart.Interval
 import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.features.coin.R
-import com.giuseppe_longhitano.ui.view.atomic_view.ChipGroup
 import com.giuseppe_longhitano.ui.view.widget.base.BaseScreen
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import com.giuseppe_longhitano.ui.view.widget.chart.CoinLineChart
+import com.giuseppe_longhitano.ui.view.widget.chart.Interval
 import com.giuseppe_longhitano.ui.view.widget.drop_down.DropDownEvent
 import com.giuseppe_longhitano.ui.view.widget.drop_down.DropDownMenu
 import com.giuseppe_longhitano.ui.view.widget.drop_down.ui_model.DropDownModel
@@ -83,10 +82,9 @@ internal fun CoinDetailsScreen(
                             CoinDetailsEvent.OnIntervalChange(it.model as Interval)
                         )
                     }
-
                 }
             )
-             CoinLineChart(
+            CoinLineChart(
                 state = state.data?.chart,
                 handleEvent = {
                     val event = when (it) {
@@ -111,7 +109,9 @@ fun CoinDetailsInfo(coinDetails: CoinDetails?) {
         Spacer(modifier = Modifier.padding(8.dp))
         Card {
             LabelValueItem(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 label = stringResource(R.string.description),
                 value = coinDetails.description
 

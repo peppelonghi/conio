@@ -20,11 +20,16 @@ import com.giuseppe_longhitano.ui.view.widget.drop_down.ui_model.DropDownModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T>DropDownMenu(modifier: Modifier = Modifier, items: List<DropDownModel<T>>, handleEvent: (UIEvent) -> Unit, title: String? = null) {
+fun <T> DropDownMenu(
+    modifier: Modifier = Modifier,
+    items: List<DropDownModel<T>>,
+    handleEvent: (UIEvent) -> Unit,
+    title: String? = null
+) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(items.first().value) }
-    Column( modifier= modifier) {
-      if (title!=null)  Text(text = title)
+    Column(modifier = modifier) {
+        if (title != null) Text(text = title)
         ExposedDropdownMenuBox(
             modifier = Modifier.fillMaxWidth(),
             expanded = expanded,
@@ -37,7 +42,9 @@ fun <T>DropDownMenu(modifier: Modifier = Modifier, items: List<DropDownModel<T>>
                 onValueChange = { selectedText = it },
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth()
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                    .fillMaxWidth()
             )
             ExposedDropdownMenu(
                 modifier = Modifier.fillMaxWidth(),

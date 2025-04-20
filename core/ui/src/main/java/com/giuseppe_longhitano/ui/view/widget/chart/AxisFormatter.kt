@@ -9,11 +9,13 @@ import java.util.Date
 import java.util.TimeZone
 
 private const val TAG = "IntervalTimestampXAxisV"
+
 class IntervalFormatter(
     private val timestampMap: Map<Float, Double>,
     private val interval: Interval
 ) : ValueFormatter() {
-    override fun getFormattedValue(value: Float): String = convertTimestampToDateTime(timestampMap[value]?:0.0 , Interval.retrieveFormat(interval))
+    override fun getFormattedValue(value: Float): String =
+        convertTimestampToDateTime(timestampMap[value] ?: 0.0, Interval.retrieveFormat(interval))
 
     @SuppressLint("SimpleDateFormat")
     fun convertTimestampToDateTime(
@@ -34,7 +36,7 @@ class IntervalFormatter(
 
 
 //sto considerando solo l euro come vs_currency
-class ScaleFormatterEur(val scale: ScaleInfo): ValueFormatter() {
+class ScaleFormatterEur(val scale: ScaleInfo) : ValueFormatter() {
     //
     override fun getFormattedValue(value: Float): String = formatValue(value, scale) + " €"
- }
+}

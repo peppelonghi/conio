@@ -46,7 +46,7 @@ fun CoinItemInfo(modifier: Modifier = Modifier, coin: Coin?, handleEvent: (CoinL
                 )
             },
         )
-    }?: Text(
+    } ?: Text(
         text = stringResource(R.string.no_info),
         style = MaterialTheme.typography.headlineMedium
     )

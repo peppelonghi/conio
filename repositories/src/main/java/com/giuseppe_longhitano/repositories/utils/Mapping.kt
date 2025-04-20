@@ -9,7 +9,7 @@ import com.giuseppe_longhitano.network.model.ChartResponseDTO
 import com.giuseppe_longhitano.network.model.CoinDTO
 import com.giuseppe_longhitano.network.model.CoinDetailsDTO
 
-internal fun CoinDTO.toCoin() =
+internal fun CoinDTO.toDomain() =
     Coin(
         id = Id(this.id),
         urlmage = this.image,
@@ -18,7 +18,7 @@ internal fun CoinDTO.toCoin() =
         name = name
     )
 
-internal fun CoinDetailsDTO.toCoinDetails() =
+internal fun CoinDetailsDTO.toDomain() =
     CoinDetails(
         coin = Coin(
             id = Id(this.id),
@@ -30,12 +30,13 @@ internal fun CoinDetailsDTO.toCoinDetails() =
         description = description.values.firstOrNull() ?: "",
     )
 
-internal fun ChartResponseDTO.toChart() = Chart(
+internal fun ChartResponseDTO.toDomain() = Chart(
     interval = "",
-    listChartItems = listOf(
-        ChartItem(title = PRICES, item = this.prices),
-        ChartItem(title = MarketCaps, item = this.market_caps),
-        ChartItem(title = TotalVolume, item = this.total_volumes)
+    itemsChart = listOf(
+        ChartItem(title = PRICES, coords = this.prices),
+        ChartItem(title = MarketCaps, coords = this.market_caps),
+        //NON SO CHE RAPPRESNETANO PER CUI LO COMMENTO
+        //ChartItem(title = TotalVolume, item = this.total_volumes)
     )
 
 

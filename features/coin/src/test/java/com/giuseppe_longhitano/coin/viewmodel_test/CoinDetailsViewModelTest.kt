@@ -220,7 +220,7 @@ class CoinDetailsViewModelTest {
         val listChartItems = (0 until numChartItems).map { createFakeChartItem() }
 
         return Chart(
-            listChartItems = listChartItems,
+            itemsChart = listChartItems,
             interval = "1",
 
         )

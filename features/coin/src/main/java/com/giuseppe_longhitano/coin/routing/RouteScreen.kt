@@ -5,7 +5,9 @@ import com.giuseppe_longhitano.arch.routing.Route
 import kotlinx.serialization.Serializable
 
 private const val TAG = "RouteScreen"
+
 sealed interface RouteScreen : Route {
+
     @Serializable
     object CoinListScreen : RouteScreen
 

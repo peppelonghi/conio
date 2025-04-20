@@ -1,29 +1,28 @@
 package com.giuseppe_longhitano.repositories
 
-import android.util.Log
 import com.giuseppe_longhitano.domain.model.Chart
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.domain.model.Id
 import com.giuseppe_longhitano.domain.repositories.CoinRepository
 import com.giuseppe_longhitano.network.CoinGeckoService
-import com.giuseppe_longhitano.repositories.utils.toChart
-import com.giuseppe_longhitano.repositories.utils.toCoin
-import com.giuseppe_longhitano.repositories.utils.toCoinDetails
+import com.giuseppe_longhitano.repositories.utils.toDomain
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.util.Locale
-import kotlin.text.orEmpty
 
 private const val TAG = "CoinRepositoryImpl"
 
-internal class CoinRepositoryImpl(private val service: CoinGeckoService) : CoinRepository {
+internal class CoinRepositoryImpl(private val service: CoinGeckoService, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoinRepository {
 
 
     override suspend fun getCoin(page: Int): Flow<Result<List<Coin>>> =
         flow {
-            emit(Result.success(service.getCoins(page = page).map { it.toCoin() }))
+            emit(Result.success(service.getCoins(page = page).map { it.toDomain() }))
         }.catch {
             emit(Result.failure(it))
         }
@@ -35,23 +34,22 @@ internal class CoinRepositoryImpl(private val service: CoinGeckoService) : CoinR
                 Result.success(
                     coinDetails.copy(
                         description = getDescrByLanguege(coinDetails.description)
-                    ).toCoinDetails()
+                    ).toDomain()
                 )
             )
         }.catch {
             emit(Result.failure(it))
-        }
+        }.flowOn(dispatcher)
 
-    override suspend fun getChart(id: Id , interval: String): Flow<Result<Chart>> =
+    override suspend fun getChart(id: Id, interval: String): Flow<Result<Chart>> =
         flow {
 
-            val result = service.getChartData(id = id.value, days =  interval)
             emit(
-                Result.success(result.toChart().copy(interval = interval))
+                Result.success(service.getChartData(id = id.value, days = interval).toDomain().copy(interval = interval))
             )
         }.catch {
-             emit(Result.failure(it))
-        }
+            emit(Result.failure(it))
+        }.flowOn(dispatcher)
 
 
     //si protrebbe localizzare un pó tutto

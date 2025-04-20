@@ -6,4 +6,5 @@
     <string name="retry">Retry</string>
     <string name="interval">Day Interval</string>
      <string name="ops_something_went_wrong">Ops... Something went wrong</string>
+    <string name="no_info">No information to show</string>
 </resources>
