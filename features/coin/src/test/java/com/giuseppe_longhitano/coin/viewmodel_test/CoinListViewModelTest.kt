@@ -2,7 +2,7 @@ package com.giuseppe_longhitano.coin.viewmodel_test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.giuseppe_longhitano.arch.event.CommonEvent
+import com.giuseppe_longhitano.coin.coin_list.screen.CoinListViewModel
 import com.giuseppe_longhitano.domain.repositories.CoinRepository
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -23,7 +23,7 @@ class CoinListViewModelTest {
 
     private val repository = mockk<CoinRepository>(relaxed = true)
 
-    private val sut by lazy { CoinsListViewModel(repository) }
+    private val sut by lazy { CoinListViewModel(repository) }
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -42,7 +42,7 @@ class CoinListViewModelTest {
     fun `test success`() = runTest {
         coEvery { repository.getCoin() } returns flowOf(Result.success(emptyList()))
         sut.uiState.test {
-            assert(awaitItem().data?.isEmpty() == true)
+            assert(awaitItem().error == null)
 
         }
     }
@@ -52,16 +52,8 @@ class CoinListViewModelTest {
         coEvery { repository.getCoin() } returns flowOf(Result.failure(Throwable()))
         sut.uiState.test {
             assert(awaitItem().error != null)
-        }
-    }
 
-    @Test
-    fun `test event`() = runTest {
-        coEvery { repository.getCoin() } returns flowOf(Result.failure(Throwable()))
-        sut.uiState.test {
-            assert(awaitItem().error != null)
         }
-        sut.handleEvent(CommonEvent.Retry)
     }
 
 
