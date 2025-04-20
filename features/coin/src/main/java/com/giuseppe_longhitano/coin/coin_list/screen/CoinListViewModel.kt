@@ -1,5 +1,6 @@
 package com.giuseppe_longhitano.coin.coin_list.screen
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.giuseppe_longhitano.arch.event.CommonEvent
 import com.giuseppe_longhitano.arch.event.CommonEvent.Retry
@@ -10,6 +11,7 @@ import com.giuseppe_longhitano.ui.ConioBaseViewModel
 import com.giuseppe_longhitano.ui.utils.getData
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.ListModel
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -34,7 +36,6 @@ class CoinListViewModel(private val repository: CoinRepository) :
 
     private fun getCoins() {
         viewModelScope.launch {
-
             var data = _uiState.getData()
             val firstLoading = data?.items.isNullOrEmpty() && _uiState.value.error == null
 
@@ -63,7 +64,7 @@ class CoinListViewModel(private val repository: CoinRepository) :
                 endReached = coins.isEmpty()
             )
             _uiState.value = _uiState.value.copy(data = newData, isLoading = false)
-        }, onFailure = {
+         }, onFailure = {
 
             val isPageLoading =
                 if (_uiState.value.isLoading == true) false else _uiState.value.isLoading
@@ -73,6 +74,7 @@ class CoinListViewModel(private val repository: CoinRepository) :
                 error = pageError ?: it
             )
 
+            Log.d(TAG, "handleCoinsResult() called $it+")
             _uiState.update {
                 it.copy(data = newData, isLoading = isPageLoading, error = pageError)
             }

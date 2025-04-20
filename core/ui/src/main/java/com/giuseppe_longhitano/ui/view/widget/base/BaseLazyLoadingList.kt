@@ -1,12 +1,18 @@
 package com.giuseppe_longhitano.ui.view.widget.base
 
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,8 +29,18 @@ import com.giuseppe_longhitano.ui.view.widget.extra.LoadingLazyList
 
 @Composable
 fun <T> BaseLazyLoadingList(
-    uiState: UIState<ListModel<T>>, modifier: Modifier = Modifier,
-    handleEvent: (UIEvent) -> Unit, contentItem: @Composable (T) -> Unit,
+    modifier: Modifier = Modifier,
+    state: LazyListState = rememberLazyListState(),
+    uiState: UIState<ListModel<T>>,
+    handleEvent: (UIEvent) -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    content: @Composable  (T) -> Unit,
+    reverseLayout: Boolean = false,
+    verticalArrangement: Arrangement.Vertical = if (!reverseLayout) Arrangement.Top else Arrangement.Bottom,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+    flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+    userScrollEnabled: Boolean = true,
+
 ) {
     val data = uiState.data
     BaseScreen(
@@ -35,12 +51,17 @@ fun <T> BaseLazyLoadingList(
         handleEvent = handleEvent, modifier = modifier
     ) {
         LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = horizontalAlignment,
+            flingBehavior = flingBehavior,
+            userScrollEnabled =userScrollEnabled,
+            state = state,
+            contentPadding = contentPadding,
+            reverseLayout = reverseLayout,
+            verticalArrangement = verticalArrangement,
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(data?.items.orEmpty()) { item ->
-                contentItem.invoke(item)
+                content.invoke(item)
             }
             item {
                 if (data?.isLoading == true)

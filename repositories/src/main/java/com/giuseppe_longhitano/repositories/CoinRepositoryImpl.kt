@@ -25,7 +25,7 @@ internal class CoinRepositoryImpl(private val service: CoinGeckoService, private
             emit(Result.success(service.getCoins(page = page).map { it.toDomain() }))
         }.catch {
             emit(Result.failure(it))
-        }
+        }.flowOn(dispatcher)
 
     override suspend fun getCoinDetails(id: Id): Flow<Result<CoinDetails>> =
         flow {
