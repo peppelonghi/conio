@@ -10,5 +10,6 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="no_info">No information</string>
+    <string name="to_have_more_info">* To have more informations, visit the official website: </string>
 
 </resources>

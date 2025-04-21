@@ -1,5 +1,7 @@
 package com.giuseppe_longhitano.baseproject
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,14 +18,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.giuseppe_longhitano.arch.routing.Back
+import com.giuseppe_longhitano.arch.routing.ExternalRoute
 import com.giuseppe_longhitano.coin.routing.RouteScreen
 import com.giuseppe_longhitano.coin.routing.coinFeatureGraph
 import com.giuseppe_longhitano.ui.theme.ConioProjectTheme
 import com.giuseppe_longhitano.ui.view.widget.topbar.ConioTopAppBar
 import com.giuseppe_longhitano.ui.view.widget.topbar.ui_model.TopAppBarModel
+import androidx.core.net.toUri
 
 
 private const val TAG = "MainActivity"
@@ -42,6 +47,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
+    val context = LocalContext.current
     val navController = rememberNavController()
     var topAppBarModel by remember { mutableStateOf<TopAppBarModel>(TopAppBarModel()) }
     ConioProjectTheme {
@@ -64,6 +70,7 @@ fun App() {
                     }, onNavigationEvent = { route ->
                         when (route) {
                             is Back -> navController.popBackStack()
+                            is ExternalRoute-> context.startActivity( Intent(Intent.ACTION_VIEW, route.url.value.toUri()))
                             else -> navController.navigate(route)
                         }
                     })

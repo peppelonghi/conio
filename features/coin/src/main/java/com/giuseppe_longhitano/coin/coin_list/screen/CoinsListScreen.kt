@@ -45,7 +45,7 @@ internal fun CoinListScreen(
     uiState: UIState<ListModel<Coin>>,
     handleEvent: (UIEvent) -> Unit
 ) {
-    BaseLazyLoadingList<Coin>(uiState =uiState, modifier =  modifier, handleEvent = handleEvent, content = {
+    BaseLazyLoadingList(uiState =uiState, modifier =  modifier, handleEvent = handleEvent, content = {
         CoinItem(modifier = Modifier, coin = it, handleEvent = handleEvent)
     })
 }

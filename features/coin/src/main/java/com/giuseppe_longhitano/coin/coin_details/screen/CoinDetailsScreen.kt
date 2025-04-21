@@ -1,16 +1,11 @@
 package com.giuseppe_longhitano.coin.coin_details.screen
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -19,11 +14,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.giuseppe_longhitano.arch.event.CommonEvent
+import com.giuseppe_longhitano.arch.event.NavigationEvent
 import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.coin.coin_details.screen.ui_model.ExpandedCoinDetails
-import com.giuseppe_longhitano.coin.coin_details.view.CoinItemInfo
-import com.giuseppe_longhitano.domain.model.CoinDetails
-import com.giuseppe_longhitano.features.coin.R
+import com.giuseppe_longhitano.coin.coin_details.view.CoinDetailsOtherInfo
+import com.giuseppe_longhitano.coin.coin_details.view.CoinDetailsHeader
 import com.giuseppe_longhitano.ui.view.widget.base.BaseScreen
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import com.giuseppe_longhitano.ui.view.widget.chart.CoinLineChart
@@ -31,7 +26,6 @@ import com.giuseppe_longhitano.ui.view.widget.chart.Interval
 import com.giuseppe_longhitano.ui.view.widget.drop_down.DropDownEvent
 import com.giuseppe_longhitano.ui.view.widget.drop_down.DropDownMenu
 import com.giuseppe_longhitano.ui.view.widget.drop_down.ui_model.DropDownModel
-import com.giuseppe_longhitano.ui.view.widget.extra.LabelValueItem
 import org.koin.androidx.compose.koinViewModel
 import com.giuseppe_longhitano.ui.R as RUI
 
@@ -41,37 +35,41 @@ private const val TAG = "CoinListScreen"
 @Composable
 fun CoinDetailsScreen(
     coinDetailsViewModel: CoinDetailsViewModel = koinViewModel(),
-    handleEvent: (UIEvent) -> Unit
+    handleEvent: (NavigationEvent) -> Unit
 ) {
     val state by coinDetailsViewModel.uiState.collectAsStateWithLifecycle()
     CoinDetailsScreen(
         state = state,
         handleEvent = { event ->
-            coinDetailsViewModel.handleEvent(event)
+            when (event) {
+                is CoinDetailsEvent  -> coinDetailsViewModel.handleEvent(event)
+                is NavigationEvent ->handleEvent.invoke(event)
+                else -> throw Throwable("No event found for $event")
+            }
         })
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CoinDetailsScreen(
     state: UIState<ExpandedCoinDetails>,
     handleEvent: (UIEvent) -> Unit
 ) {
-    val scrollState = rememberScrollState()
     BaseScreen(
         uiState = state,
         modifier = Modifier
             .fillMaxSize(),
         handleEvent = handleEvent
-    ) {
+    ) { data ->
         Column(
             Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .verticalScroll(rememberScrollState())
                 .padding(dimensionResource(RUI.dimen.screen_padding))
         ) {
-            CoinItemInfo(coin = state.data?.coinDetails?.coin) { }
+            CoinDetailsHeader(
+                coin = data?.coinDetails?.coin,
+                handleEvent = { handleEvent.invoke(it) })
             DropDownMenu(
                 modifier = Modifier.fillMaxWidth(),
                 title = stringResource(RUI.string.interval),
@@ -85,7 +83,7 @@ internal fun CoinDetailsScreen(
                 }
             )
             CoinLineChart(
-                state = state.data?.chart,
+                state = data?.chart,
                 handleEvent = {
                     val event = when (it) {
                         is CommonEvent.Retry -> CoinDetailsEvent.RefreshGraph
@@ -96,29 +94,12 @@ internal fun CoinDetailsScreen(
                 modifier = Modifier
                     .padding(top = 16.dp)
             )
-            CoinDetailsInfo(coinDetails = state.data?.coinDetails)
+            CoinDetailsOtherInfo(coinDetails = data?.coinDetails, handleEvent = handleEvent)
         }
-
-
     }
 }
 
-@Composable
-fun CoinDetailsInfo(coinDetails: CoinDetails?) {
-    coinDetails?.let {
-        Spacer(modifier = Modifier.padding(8.dp))
-        Card {
-            LabelValueItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                label = stringResource(R.string.description),
-                value = coinDetails.description
 
-            )
-        }
-    } ?: Text(text = stringResource(R.string.no_info), style = MaterialTheme.typography.titleMedium)
-}
 
 
 

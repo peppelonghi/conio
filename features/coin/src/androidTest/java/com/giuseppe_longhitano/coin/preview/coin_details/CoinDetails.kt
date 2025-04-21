@@ -19,7 +19,7 @@ import kotlin.random.Random
 @Composable
 fun CoinDetailsPreviewLoading() {
     Surface {
-        CoinDetailsScreen(state = UIState<ExpandedCoinDetails>(isLoading = true)) {}
+        CoinDetailsScreen(state = UIState(isLoading = true)) {}
     }
 }
 
@@ -27,7 +27,7 @@ fun CoinDetailsPreviewLoading() {
 @Composable
 fun CoinDetailsPreviewSuccess() {
     Surface {
-        CoinDetailsScreen(state = UIState<ExpandedCoinDetails>(isLoading = false, data = coinDetails)){}
+        CoinDetailsScreen(state = UIState(isLoading = false, data = coinDetails)){}
     }
 }
 

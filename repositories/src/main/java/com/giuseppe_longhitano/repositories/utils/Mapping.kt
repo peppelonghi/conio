@@ -5,6 +5,7 @@ import com.giuseppe_longhitano.domain.model.ChartItem
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.domain.model.Id
+import com.giuseppe_longhitano.domain.model.Url
 import com.giuseppe_longhitano.network.model.ChartResponseDTO
 import com.giuseppe_longhitano.network.model.CoinDTO
 import com.giuseppe_longhitano.network.model.CoinDetailsDTO
@@ -25,9 +26,10 @@ internal fun CoinDetailsDTO.toDomain() =
             symbol = this.symbol,
             name = name,
             urlmage = this.image.large,
-            currentPrice = this.marketData.currentPrice[EUR]?.toDouble() ?: 0.0
+            currentPrice = this.marketDataDTO.currentPrice[EUR] ?: 0.0
         ),
         description = description.values.firstOrNull() ?: "",
+        url = Url.createUrl(links.homepage.firstOrNull())
     )
 
 internal fun ChartResponseDTO.toDomain() = Chart(

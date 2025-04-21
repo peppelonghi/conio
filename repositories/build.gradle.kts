@@ -36,6 +36,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
 
+    //internal
     implementation(project(":network"))
     implementation(project(":domain"))
 

@@ -86,6 +86,7 @@ class CoinListViewModel(private val repository: CoinRepository) :
 
         when (uiEvent) {
             is CommonEvent.Next -> getCoins()
+
             is Retry -> {
                 _uiState.update { it.copy(isLoading = true, error = null) }
                 getCoins()

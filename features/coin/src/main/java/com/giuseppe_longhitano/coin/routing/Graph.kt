@@ -11,6 +11,7 @@ import androidx.compose.ui.text.toUpperCase
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.giuseppe_longhitano.arch.event.NavigationEvent
 import com.giuseppe_longhitano.arch.routing.Back
 import com.giuseppe_longhitano.arch.routing.Route
 import com.giuseppe_longhitano.coin.coin_details.screen.CoinDetailsScreen
@@ -36,8 +37,8 @@ fun NavGraphBuilder.coinFeatureGraph(
         CoinListScreen(
             modifier = Modifier.fillMaxSize(),
             handleEvent = { event ->
-                onNavigationEvent.invoke(event.dest)
-            },
+                   onNavigationEvent.invoke(event.route)
+             },
         )
     }
     composable<CoinDetailScreen>
@@ -53,6 +54,9 @@ fun NavGraphBuilder.coinFeatureGraph(
             )
         )
 
-        CoinDetailsScreen{}
+        CoinDetailsScreen(handleEvent = {event->
+            onNavigationEvent.invoke(event.route)
+        })
     }
 }
+

@@ -61,7 +61,7 @@ fun <T> BaseScreen(
                 .align(Alignment.Center)
         )
     },
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable (BoxScope.(T?) -> Unit)
 ) {
     with(uiState) {
         Box(modifier = modifier.fillMaxSize()) {
@@ -69,7 +69,7 @@ fun <T> BaseScreen(
                 data == null && error != null && !isLoading -> errorPageView()
                 isLoading -> loadingView()
                 error != null -> errorMsgView()
-                data != null -> content()
+                data != null -> content(uiState.data)
             }
         }
     }

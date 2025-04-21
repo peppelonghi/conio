@@ -8,14 +8,16 @@ data class CoinDetailsDTO(
     val id: String,
     val symbol: String,
     val name: String,
-    val image: Images,
+    val image: ImagesDTO,
     val description: Map<String, String>,
     @SerialName("market_data")
-    val marketData: MarketData,
+    val marketDataDTO: MarketDataDTO,
+    val links: LinksDTO
 )
 
-@Serializable
-data class Images(val thumb: String, val small: String, val large: String)
 
-@Serializable
-data class MarketData(@SerialName("current_price") val currentPrice: Map<String, Double>)
+
+
+
+
+
