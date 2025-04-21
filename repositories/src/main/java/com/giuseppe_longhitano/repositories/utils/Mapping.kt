@@ -34,7 +34,7 @@ internal fun ChartResponseDTO.toDomain() = Chart(
     interval = "",
     itemsChart = listOf(
         ChartItem(title = PRICES, coords = this.prices),
-        ChartItem(title = MarketCaps, coords = this.market_caps),
+        ChartItem(title = MarketCaps, coords = this.marketCaps),
         //NON SO CHE RAPPRESNETANO PER CUI LO COMMENTO
         //ChartItem(title = TotalVolume, item = this.total_volumes)
     )

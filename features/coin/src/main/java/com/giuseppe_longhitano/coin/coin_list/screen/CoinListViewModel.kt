@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-private const val TAG = "CoinListViewModel2"
+private const val TAG = "CoinListViewModel"
 
 class CoinListViewModel(private val repository: CoinRepository) :
     ConioBaseViewModel<ListModel<Coin>>() {
@@ -54,28 +54,29 @@ class CoinListViewModel(private val repository: CoinRepository) :
     }
 
     private fun handleCoinsResult(coinResult: Result<List<Coin>>) {
-        var data = _uiState.getData()
+        val data = _uiState.getData()
         coinResult.fold(onSuccess = { coins ->
-            val newData = ListModel<Coin>(
+            val newData = ListModel(
                 isLoading = false,
                 error = null,
                 items = data?.items.orEmpty() + coins,
                 page = (data?.page ?: 1).plus(1),
                 endReached = coins.isEmpty()
             )
-            _uiState.value = _uiState.value.copy(data = newData, isLoading = false)
-         }, onFailure = {
+            _uiState.update {
+                it.copy(data = newData, isLoading = false)
+            }
+         }, onFailure = {th->
 
             val isPageLoading =
-                if (_uiState.value.isLoading == true) false else _uiState.value.isLoading
-            val pageError = if (_uiState.value.isLoading == true) it else _uiState.value.error
+                if (_uiState.value.isLoading) false else _uiState.value.isLoading
+            val pageError = if (_uiState.value.isLoading) th else _uiState.value.error
             val newData = data?.copy(
                 isLoading = false,
-                error = pageError ?: it
+                error = pageError ?: th
             )
 
-            Log.d(TAG, "handleCoinsResult() called $it+")
-            _uiState.update {
+             _uiState.update {
                 it.copy(data = newData, isLoading = isPageLoading, error = pageError)
             }
         })

@@ -35,11 +35,6 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":network"))
     implementation(project(":domain"))
@@ -47,8 +42,10 @@ dependencies {
     //DI
     implementation(libs.koin.core)
 
-
     //test
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.turbine)}
+    testImplementation(libs.turbine)
+    testImplementation(libs.junit)
+
+}

@@ -1,10 +1,8 @@
-import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
 
 }
 
@@ -50,15 +48,9 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.coil.kt.compose)
     implementation(libs.mpandroidchart)
-
-    //utils
-    implementation(libs.kotlinx.serialization.json)
     implementation(libs.lottie.compose)
 
     implementation(project(":core:arch"))
     implementation(project(":domain"))
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-}
+ }

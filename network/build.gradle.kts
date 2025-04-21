@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-  }
+    alias(libs.plugins.kotlin.serialization)
+
+}
 
 android {
     namespace = "com.giuseppe_longhitano.network"
@@ -43,18 +45,12 @@ dependencies {
 
     //NETWORK
     implementation(libs.retrofit)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.network.converter)
     implementation(libs.network.okhttp3)
-    implementation(libs.retrofit.gson)
-    implementation(libs.gson)
     implementation(libs.okhttp.logging.interceptor)
-
-
+    implementation(libs.network.converter)
+    implementation(libs.kotlinx.serialization.json)
     //DI
     implementation(libs.koin.core)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
 }

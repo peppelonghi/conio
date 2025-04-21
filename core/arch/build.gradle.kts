@@ -37,10 +37,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.navigation.compose)
     implementation(libs.koin.core)
 
 }
