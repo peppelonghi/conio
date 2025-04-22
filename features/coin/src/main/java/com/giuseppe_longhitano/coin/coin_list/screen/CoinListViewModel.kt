@@ -1,6 +1,5 @@
 package com.giuseppe_longhitano.coin.coin_list.screen
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.giuseppe_longhitano.arch.event.CommonEvent
 import com.giuseppe_longhitano.arch.event.CommonEvent.Retry
@@ -11,7 +10,6 @@ import com.giuseppe_longhitano.ui.ConioBaseViewModel
 import com.giuseppe_longhitano.ui.utils.getData
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.ListModel
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -37,9 +35,9 @@ class CoinListViewModel(private val repository: CoinRepository) :
     private fun getCoins() {
         viewModelScope.launch {
             var data = _uiState.getData()
-            val firstLoading = data?.items.isNullOrEmpty() && _uiState.value.error == null
+            val shouldLoadInitially = data?.items.isNullOrEmpty() && _uiState.value.error == null
 
-            if (firstLoading) {
+            if (shouldLoadInitially) {
                 _uiState.update {
                     it.copy(isLoading = true)
                 }
@@ -85,6 +83,7 @@ class CoinListViewModel(private val repository: CoinRepository) :
     override fun handleEvent(uiEvent: UIEvent) {
 
         when (uiEvent) {
+
             is CommonEvent.Next -> getCoins()
 
             is Retry -> {
