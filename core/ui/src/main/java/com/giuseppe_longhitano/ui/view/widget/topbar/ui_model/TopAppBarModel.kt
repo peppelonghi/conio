@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class TopAppBarModel(
-    val title: String = "Home",
-    val navigationIcon: ImageVector? = Icons.Default.Home,
+    val title: String ? = null,
+    val navigationIcon: ImageVector? = null,
     val onNavigationIconClick: (() -> Unit)? = null,
     val actions: @Composable RowScope.() -> Unit = {}
 )

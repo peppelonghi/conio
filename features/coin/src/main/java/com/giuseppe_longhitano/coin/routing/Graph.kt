@@ -11,8 +11,7 @@ import androidx.compose.ui.text.toUpperCase
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.giuseppe_longhitano.arch.event.NavigationEvent
-import com.giuseppe_longhitano.arch.routing.Back
+import com.giuseppe_longhitano.arch.routing.BackRoute
 import com.giuseppe_longhitano.arch.routing.Route
 import com.giuseppe_longhitano.coin.coin_details.screen.CoinDetailsScreen
 import com.giuseppe_longhitano.coin.coin_list.screen.CoinListScreen
@@ -48,13 +47,15 @@ fun NavGraphBuilder.coinFeatureGraph(
             TopAppBarModel(
                 title = stringResource(R.string.crypto, id.toUpperCase(Locale.current)),
                 onNavigationIconClick = {
-                    onNavigationEvent.invoke(Back)
+                    onNavigationEvent.invoke(BackRoute)
                 },
                 navigationIcon = Icons.AutoMirrored.Default.ArrowBack
             )
         )
 
-        CoinDetailsScreen(handleEvent = {event->
+        CoinDetailsScreen(
+            modifier = Modifier.fillMaxSize(),
+            handleEvent = {event->
             onNavigationEvent.invoke(event.route)
         })
     }

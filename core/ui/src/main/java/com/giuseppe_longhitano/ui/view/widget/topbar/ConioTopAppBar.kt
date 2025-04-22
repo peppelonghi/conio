@@ -13,7 +13,7 @@ import com.giuseppe_longhitano.ui.view.widget.topbar.ui_model.TopAppBarModel
 @Composable
 fun ConioTopAppBar(topAppBarModel: TopAppBarModel) {
     TopAppBar(
-        title = { Text(text = topAppBarModel.title, style = MaterialTheme.typography.titleMedium) },
+        title = { Text(text = topAppBarModel.title.orEmpty(), style = MaterialTheme.typography.titleMedium) },
         navigationIcon = {
             topAppBarModel.navigationIcon?.let { icon ->
                 IconButton(onClick = { topAppBarModel.onNavigationIconClick?.invoke() }) {

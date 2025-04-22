@@ -15,3 +15,10 @@ The app displays a list of crypto, and users can view detailed information about
 -   **Kotlin Coroutines:** Uses Kotlin coroutines for asynchronous operations, improving app responsiveness.
 -   **Navigation:** Utilizes the Navigation Component for smooth transitions between screens.
 -   **Koin** for DI 
+
+
+## Disclaimer
+- ** The UI is not Beautiful, I know **
+- ** The app  is based on the EUR**
+
+

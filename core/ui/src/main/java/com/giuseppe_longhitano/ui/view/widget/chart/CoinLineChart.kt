@@ -130,9 +130,10 @@ fun CoinLineChart(
                             items = titles,
                             selectedItem = items.first().title,
                             modifier = Modifier.padding(16.dp),
-                            onItemSelected = { selection ->
+
+                            handleEvent = { selection ->
                                 selected.value =
-                                    items.firstOrNull { item -> item.title == selection }?.title
+                                    items.firstOrNull { item -> item.title == selection.selectedItem }?.title
                                         ?: selected.value
                             })
                     }

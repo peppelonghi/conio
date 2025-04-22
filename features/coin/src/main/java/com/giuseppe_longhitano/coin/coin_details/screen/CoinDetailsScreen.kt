@@ -19,6 +19,7 @@ import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.coin.coin_details.screen.ui_model.ExpandedCoinDetails
 import com.giuseppe_longhitano.coin.coin_details.view.CoinDetailsOtherInfo
 import com.giuseppe_longhitano.coin.coin_details.view.CoinDetailsHeader
+import com.giuseppe_longhitano.ui.view.atomic_view.ChipGroup
 import com.giuseppe_longhitano.ui.view.widget.base.BaseScreen
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import com.giuseppe_longhitano.ui.view.widget.chart.CoinLineChart
@@ -34,16 +35,18 @@ private const val TAG = "CoinListScreen"
 
 @Composable
 fun CoinDetailsScreen(
+    modifier: Modifier = Modifier,
     coinDetailsViewModel: CoinDetailsViewModel = koinViewModel(),
     handleEvent: (NavigationEvent) -> Unit
 ) {
     val state by coinDetailsViewModel.uiState.collectAsStateWithLifecycle()
     CoinDetailsScreen(
+        modifier = modifier,
         state = state,
         handleEvent = { event ->
             when (event) {
                 is CoinDetailsEvent  -> coinDetailsViewModel.handleEvent(event)
-                is NavigationEvent ->handleEvent.invoke(event)
+                is NavigationEvent -> handleEvent.invoke(event)
                 else -> throw Throwable("No event found for $event")
             }
         })
@@ -52,12 +55,13 @@ fun CoinDetailsScreen(
 
 @Composable
 internal fun CoinDetailsScreen(
+    modifier: Modifier = Modifier,
     state: UIState<ExpandedCoinDetails>,
     handleEvent: (UIEvent) -> Unit
 ) {
     BaseScreen(
         uiState = state,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         handleEvent = handleEvent
     ) { data ->
@@ -70,6 +74,7 @@ internal fun CoinDetailsScreen(
             CoinDetailsHeader(
                 coin = data?.coinDetails?.coin,
                 handleEvent = { handleEvent.invoke(it) })
+
             DropDownMenu(
                 modifier = Modifier.fillMaxWidth(),
                 title = stringResource(RUI.string.interval),
