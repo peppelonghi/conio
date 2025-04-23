@@ -45,7 +45,6 @@ fun CoinDetailsScreen(
         state = state,
         handleEvent = { event ->
             when (event) {
-
                 is CoinDetailsEvent, is CommonEvent.Retry  -> coinDetailsViewModel.handleEvent(event)
                 is NavigationEvent -> handleEvent.invoke(event)
                 else -> throw Throwable("No event found for $event")
