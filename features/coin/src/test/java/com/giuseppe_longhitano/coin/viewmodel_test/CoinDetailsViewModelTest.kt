@@ -90,10 +90,10 @@ class CoinDetailsViewModelTest {
         sut.uiState.test {
             val item = awaitItem()
             assert(item.data != null)
-            assert(item.data?.chart?.data != null)
+            assert(item.data?.chartUIState?.data != null)
             assert(item.data?.coinDetails != null)
             assert(item.error == null)
-            assert(item.data?.chart?.error == null)
+            assert(item.data?.chartUIState?.error == null)
         }
     }
 
@@ -128,8 +128,8 @@ class CoinDetailsViewModelTest {
             val item = awaitItem()
             assert(item.data != null)
             assert(item.error == null)
-            assert(item.data?.chart?.error != null)
-            println(item.data?.chart)
+            assert(item.data?.chartUIState?.error != null)
+            println(item.data?.chartUIState)
         }
     }
 
@@ -152,7 +152,7 @@ class CoinDetailsViewModelTest {
         } returns flowOf(Result.success(mockChart))
         sut.uiState.test {
             val item = awaitItem()
-            assert(item.data?.chart?.data == mockChart)
+            assert(item.data?.chartUIState?.data == mockChart)
         }
         sut.handleEvent(CommonEvent.Retry)
         sut.handleEvent(CoinDetailsEvent.RefreshGraph)
@@ -177,7 +177,7 @@ class CoinDetailsViewModelTest {
         } returns flowOf(Result.failure(Throwable()))
         sut.uiState.test {
             val item = awaitItem()
-            assert(item.data?.chart?.error !=null)
+            assert(item.data?.chartUIState?.error !=null)
         }
         sut.handleEvent(CommonEvent.Retry)
         sut.handleEvent(CoinDetailsEvent.RefreshGraph)

@@ -19,7 +19,7 @@ val mockCoin = Coin(
 )
 
 val coinDetails = ExpandedCoinDetails(
-    chart =   UIState<Chart>(data = createFakeChart()),
+    chartUIState =   UIState<Chart>(data = createFakeChart()),
     coinDetails = CoinDetails(
         description = LoremIpsum(10).values.first(),
         coin = Coin(

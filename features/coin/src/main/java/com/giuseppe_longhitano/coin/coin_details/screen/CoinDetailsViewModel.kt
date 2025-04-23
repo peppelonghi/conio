@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-private const val TAG = "CoinDetailsViewModel"
 
 class CoinDetailsViewModel(
     private val repository: CoinRepository,
@@ -48,7 +47,7 @@ class CoinDetailsViewModel(
     private fun getChartData(
         interval: Interval = Interval.entries.first(),
     ) {
-        val chart = uiState.getData()?.chart?.copy(isLoading = true, error = null) ?: UIState(
+        val chart = uiState.getData()?.chartUIState?.copy(isLoading = true, error = null) ?: UIState(
             data =
                 Chart(
                     itemsChart = emptyList(),
@@ -56,7 +55,7 @@ class CoinDetailsViewModel(
                 ), isLoading = true, error = null
         )
         _uiState.update {
-            it.copy(data = uiState.getData()?.copy(chart = chart))
+            it.copy(data = uiState.getData()?.copy(chartUIState = chart))
         }
         job?.cancel()
         job = viewModelScope.launch {
@@ -85,13 +84,13 @@ class CoinDetailsViewModel(
     private fun handleResultChart(graphResult: Result<Chart>) {
         graphResult.fold(onSuccess = {
             val current =
-                uiState.getData()?.copy(chart = UIState(data = it, isLoading = false, error = null))
+                uiState.getData()?.copy(chartUIState = UIState(data = it, isLoading = false, error = null))
             _uiState.update {
                 it.copy(data = current, isLoading = false, error = null)
             }
         }, onFailure = {
             val current =
-                uiState.getData()?.copy(chart = UIState(data = null, isLoading = false, error = it))
+                uiState.getData()?.copy(chartUIState = UIState(data = null, isLoading = false, error = it))
             _uiState.update {
                 it.copy(data = current, isLoading = false, error = null)
             }
@@ -104,7 +103,21 @@ class CoinDetailsViewModel(
         graphResult: Result<Chart>
     ) {
         when {
-            coinDetailsResult.isFailure ->
+            coinDetailsResult.isSuccess && graphResult.isSuccess ->
+                _uiState.update {
+                    it.copy(
+                        data = ExpandedCoinDetails(
+                            coinDetails = coinDetailsResult.getOrThrow(),
+                            chartUIState = UIState(
+                                data = graphResult.getOrThrow(),
+                                isLoading = false,
+                                error = null
+                            )
+                        ), isLoading = false, error = null
+                    )
+                }
+
+            coinDetailsResult.isFailure && graphResult.isFailure ->
                 _uiState.update {
                     it.copy(
                         data = null,
@@ -117,10 +130,10 @@ class CoinDetailsViewModel(
                 _uiState.update {
                     it.copy(
                         data = ExpandedCoinDetails(
-                            coinDetailsResult.getOrThrow(),
-                            UIState(
+                            coinDetails = coinDetailsResult.getOrThrow(),
+                            chartUIState =  UIState(
                                 data = null,
-                                isLoading = true,
+                                isLoading = false,
                                 error = graphResult.exceptionOrNull()
                             )
                         ),
@@ -138,19 +151,7 @@ class CoinDetailsViewModel(
                     )
                 }
 
-            coinDetailsResult.isSuccess && graphResult.isSuccess ->
-                _uiState.update {
-                    it.copy(
-                        data = ExpandedCoinDetails(
-                            coinDetailsResult.getOrThrow(),
-                            UIState(
-                                data = graphResult.getOrThrow(),
-                                isLoading = false,
-                                error = null
-                            )
-                        ), isLoading = false, error = null
-                    )
-                }
+
         }
     }
 
@@ -160,7 +161,7 @@ class CoinDetailsViewModel(
             is CommonEvent.Retry -> getCoinDetails()
 
             is CoinDetailsEvent.RefreshGraph -> getChartData(
-                interval = Interval.Companion.safeValueOf(uiState.getData()?.chart?.data?.interval),
+                interval = Interval.Companion.safeValueOf(uiState.getData()?.chartUIState?.data?.interval),
             )
 
             is CoinDetailsEvent.OnIntervalChange -> getChartData(interval = uiEvent.interval)

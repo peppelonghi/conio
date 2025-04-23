@@ -19,14 +19,14 @@ import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.coin.coin_details.screen.ui_model.ExpandedCoinDetails
 import com.giuseppe_longhitano.coin.coin_details.view.CoinDetailsOtherInfo
 import com.giuseppe_longhitano.coin.coin_details.view.CoinDetailsHeader
-import com.giuseppe_longhitano.ui.view.atomic_view.ChipGroup
+import com.giuseppe_longhitano.ui.view.widget.chips.ChipGroup
 import com.giuseppe_longhitano.ui.view.widget.base.BaseScreen
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import com.giuseppe_longhitano.ui.view.widget.chart.CoinLineChart
 import com.giuseppe_longhitano.ui.view.widget.chart.Interval
-import com.giuseppe_longhitano.ui.view.widget.drop_down.DropDownEvent
+import com.giuseppe_longhitano.ui.view.shared.common_event.SelectionEvent
 import com.giuseppe_longhitano.ui.view.widget.drop_down.DropDownMenu
-import com.giuseppe_longhitano.ui.view.widget.drop_down.ui_model.DropDownModel
+import com.giuseppe_longhitano.ui.view.shared.common_ui_model.SelectableItem
 import org.koin.androidx.compose.koinViewModel
 import com.giuseppe_longhitano.ui.R as RUI
 
@@ -75,20 +75,20 @@ internal fun CoinDetailsScreen(
                 coin = data?.coinDetails?.coin,
                 handleEvent = { handleEvent.invoke(it) })
 
-            DropDownMenu(
+            ChipGroup(
+                items = Interval.entries.map { SelectableItem(model = it, label = it.value ) },
+                selectedItem = Interval.entries.first().value,
+                handleEvent = { value->
+                    handleEvent.invoke(
+                        CoinDetailsEvent.OnIntervalChange(value.model)
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 title = stringResource(RUI.string.interval),
-                items = Interval.entries.map { DropDownModel(model = it, value = it.value) },
-                handleEvent = {
-                    when (it) {
-                        is DropDownEvent<*> -> if (it.model is Interval) handleEvent.invoke(
-                            CoinDetailsEvent.OnIntervalChange(it.model as Interval)
-                        )
-                    }
-                }
-            )
+                )
+
             CoinLineChart(
-                state = data?.chart,
+                state = data?.chartUIState,
                 handleEvent = {
                     val event = when (it) {
                         is CommonEvent.Retry -> CoinDetailsEvent.RefreshGraph

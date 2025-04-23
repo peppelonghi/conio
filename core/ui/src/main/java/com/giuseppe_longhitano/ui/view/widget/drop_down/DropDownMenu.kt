@@ -15,19 +15,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.giuseppe_longhitano.arch.event.UIEvent
-import com.giuseppe_longhitano.ui.view.widget.drop_down.ui_model.DropDownModel
+import com.giuseppe_longhitano.ui.view.shared.common_event.SelectionEvent
+import com.giuseppe_longhitano.ui.view.shared.common_ui_model.SelectableItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> DropDownMenu(
     modifier: Modifier = Modifier,
-    items: List<DropDownModel<T>>,
-    handleEvent: (UIEvent) -> Unit,
+    items: List<SelectableItem<T>>,
+    handleEvent: (SelectionEvent<T>) -> Unit,
     title: String? = null
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf(items.first().value) }
+    var selectedText by remember { mutableStateOf(items.first().label) }
     Column(modifier = modifier) {
         if (title != null) Text(text = title)
         ExposedDropdownMenuBox(
@@ -53,10 +53,10 @@ fun <T> DropDownMenu(
             ) {
                 items.forEach { selectionOption ->
                     DropdownMenuItem(
-                        text = { Text(selectionOption.value) },
+                        text = { Text(selectionOption.label) },
                         onClick = {
-                            selectedText = selectionOption.value
-                            handleEvent.invoke(DropDownEvent(selectionOption.model))
+                            selectedText = selectionOption.label
+                            handleEvent.invoke(SelectionEvent(selectionOption.model))
                             expanded = false
                         },
                     )

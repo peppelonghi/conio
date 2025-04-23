@@ -43,14 +43,14 @@ fun CoinDetailsPreviewError() {
 fun CoinDetailsPreviewSuccessWhitChartError() {
     Surface {
         val chartError = UIState<Chart>(error = Throwable("Ops.."), isLoading = false)
-        CoinDetailsScreen(state = UIState<ExpandedCoinDetails>(isLoading = false, data = coinDetails.copy(chart = chartError))) {}
+        CoinDetailsScreen(state = UIState<ExpandedCoinDetails>(isLoading = false, data = coinDetails.copy(chartUIState = chartError))) {}
      }
 }
 
 
 
 val coinDetails = ExpandedCoinDetails(
-    chart =   UIState<Chart>(data = createFakeChart()),
+    chartUIState =   UIState<Chart>(data = createFakeChart()),
        coinDetails = CoinDetails(
            description = LoremIpsum(10).values.first(),
            coin = Coin(

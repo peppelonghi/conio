@@ -24,7 +24,8 @@ import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.arch.model.ScaleInfo
 import com.giuseppe_longhitano.domain.model.Chart
 import com.giuseppe_longhitano.ui.R
-import com.giuseppe_longhitano.ui.view.atomic_view.ChipGroup
+import com.giuseppe_longhitano.ui.view.shared.common_ui_model.SelectableItem
+import com.giuseppe_longhitano.ui.view.widget.chips.ChipGroup
 import com.giuseppe_longhitano.ui.view.widget.base.BaseWidget
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 
@@ -127,14 +128,11 @@ fun CoinLineChart(
                                 }
                             })
                         ChipGroup(
-                            items = titles,
+                            items = titles.map { SelectableItem(model = it, label = it) },
                             selectedItem = items.first().title,
                             modifier = Modifier.padding(16.dp),
-
                             handleEvent = { selection ->
-                                selected.value =
-                                    items.firstOrNull { item -> item.title == selection.selectedItem }?.title
-                                        ?: selected.value
+                                selected.value = selection.model
                             })
                     }
                 }

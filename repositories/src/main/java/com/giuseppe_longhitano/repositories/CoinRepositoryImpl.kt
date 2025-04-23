@@ -15,10 +15,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.util.Locale
 
-private const val TAG = "CoinRepositoryImpl"
 
 internal class CoinRepositoryImpl(private val service: CoinGeckoService, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoinRepository {
-
 
     override suspend fun getCoin(page: Int): Flow<Result<List<Coin>>> =
         flow {
@@ -43,7 +41,6 @@ internal class CoinRepositoryImpl(private val service: CoinGeckoService, private
 
     override suspend fun getChart(id: Id, interval: String): Flow<Result<Chart>> =
         flow {
-
             emit(
                 Result.success(service.getChartData(id = id.value, days = interval).toDomain().copy(interval = interval))
             )

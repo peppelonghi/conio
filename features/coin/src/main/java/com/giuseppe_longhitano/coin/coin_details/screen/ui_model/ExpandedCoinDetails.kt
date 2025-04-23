@@ -6,5 +6,5 @@ import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 
 data class ExpandedCoinDetails(
     val coinDetails: CoinDetails,
-    val chart: UIState<Chart> = UIState(isLoading = true, data = Chart())
+    val chartUIState: UIState<Chart> = UIState(isLoading = true, data = Chart())
 )
