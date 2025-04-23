@@ -13,6 +13,7 @@ data class CoinDetailsDTO(
     @SerialName("market_data")
     val marketDataDTO: MarketDataDTO,
     val links: LinksDTO
+    //other thousend of info
 )
 
 

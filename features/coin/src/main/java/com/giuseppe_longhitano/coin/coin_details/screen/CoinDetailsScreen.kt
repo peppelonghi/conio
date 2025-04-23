@@ -99,7 +99,7 @@ internal fun CoinDetailsScreen(
                 modifier = Modifier
                     .padding(top = 16.dp)
             )
-            CoinDetailsOtherInfo(coinDetails = data?.coinDetails, handleEvent = handleEvent)
+            CoinDetailsOtherInfo(coinDetails = data?.coinDetails, handleEvent = handleEvent, modifier = Modifier.fillMaxWidth().padding(8.dp))
         }
     }
 }

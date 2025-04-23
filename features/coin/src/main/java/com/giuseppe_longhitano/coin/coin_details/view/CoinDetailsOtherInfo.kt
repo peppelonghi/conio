@@ -17,19 +17,18 @@ import com.giuseppe_longhitano.ui.view.widget.extra.LabelValueItem
 import com.giuseppe_longhitano.ui.view.widget.text_with_url.ClickableUrl
 
 @Composable
-fun CoinDetailsOtherInfo(coinDetails: CoinDetails?, handleEvent: (UIEvent) -> Unit) {
+fun CoinDetailsOtherInfo(modifier: Modifier = Modifier, coinDetails: CoinDetails?, handleEvent: (UIEvent) -> Unit) {
     if (coinDetails == null) {
-        Text(text = stringResource(R.string.no_info), style = MaterialTheme.typography.titleMedium)
+        Text(text = stringResource(R.string.no_info), style = MaterialTheme.typography.titleMedium, modifier = modifier)
     } else {
         with(coinDetails) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+                modifier = modifier
+                    ,
             ) {
                 Card {
                     LabelValueItem(
-                        modifier = Modifier.padding(vertical = 24.dp, horizontal = 16.dp),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp, horizontal = 16.dp),
                         label = stringResource(R.string.description),
                         value = description
                     )
