@@ -69,6 +69,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:arch"))
     implementation(project(":features:coin"))
+    implementation(libs.androidx.recyclerview)
 
     //TEST
 

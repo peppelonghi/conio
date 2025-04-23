@@ -52,5 +52,6 @@ dependencies {
 
     implementation(project(":core:arch"))
     implementation(project(":domain"))
+    debugImplementation(libs.androidx.ui.tooling)
 
- }
+}

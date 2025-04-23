@@ -14,11 +14,11 @@ import com.giuseppe_longhitano.features.coin.R
 import com.giuseppe_longhitano.ui.view.atomic_view.LoadingImageView
 
 @Composable
-fun CoinItem(modifier: Modifier = Modifier, coin: Coin, handleEvent: (CoinListEvent) -> Unit) {
+fun CoinItem(modifier: Modifier = Modifier, coin: Coin, handleEvent: (CoinListEvent.CoinClicked) -> Unit) {
     with(coin) {
         ListItem(
             modifier = modifier.clickable {
-                handleEvent.invoke(CoinListEvent.ClickedCoin(coin.id))
+                handleEvent.invoke(CoinListEvent.CoinClicked(coin.id))
             },
             leadingContent = {
                 LoadingImageView(

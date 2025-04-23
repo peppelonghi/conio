@@ -22,10 +22,7 @@ fun CoinDetailsOtherInfo(modifier: Modifier = Modifier, coinDetails: CoinDetails
         Text(text = stringResource(R.string.no_info), style = MaterialTheme.typography.titleMedium, modifier = modifier)
     } else {
         with(coinDetails) {
-            Column(
-                modifier = modifier
-                    ,
-            ) {
+            Column(modifier = modifier) {
                 Card {
                     LabelValueItem(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp, horizontal = 16.dp),

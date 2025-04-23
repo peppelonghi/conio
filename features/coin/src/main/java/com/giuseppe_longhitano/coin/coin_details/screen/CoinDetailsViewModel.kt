@@ -2,15 +2,16 @@ package com.giuseppe_longhitano.coin.coin_details.screen
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.giuseppe_longhitano.arch.event.CommonEvent
 import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.coin.coin_details.screen.ui_model.ExpandedCoinDetails
-import com.giuseppe_longhitano.coin.routing.RouteScreen.CoinDetailScreen
+import com.giuseppe_longhitano.coin.routing.RouteScreen
 import com.giuseppe_longhitano.domain.model.Chart
 import com.giuseppe_longhitano.domain.model.CoinDetails
 import com.giuseppe_longhitano.domain.model.Id
 import com.giuseppe_longhitano.domain.repositories.CoinRepository
-import com.giuseppe_longhitano.ui.ConioBaseViewModel
+import com.giuseppe_longhitano.ui.BaseViewModel
 import com.giuseppe_longhitano.ui.utils.getData
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
 import com.giuseppe_longhitano.ui.view.widget.chart.Interval
@@ -27,10 +28,10 @@ import kotlinx.coroutines.launch
 class CoinDetailsViewModel(
     private val repository: CoinRepository,
     savedStateHandle: SavedStateHandle,
-) : ConioBaseViewModel<ExpandedCoinDetails>(ExpandedCoinDetails(CoinDetails())) {
+) : BaseViewModel<ExpandedCoinDetails>(ExpandedCoinDetails(CoinDetails())) {
 
     //  private val coindId = Id(savedStateHandle.toRoute<RouteScreen.CoinDetailScreen>().id)
-    private val coindId = Id(savedStateHandle.get<String>(CoinDetailScreen::id.name).orEmpty())
+    private val coindId = Id(savedStateHandle.get<String>(RouteScreen.CoinDetailScreen::id.name).orEmpty())
     private var job: Job? = null
 
     override val uiState = _uiState.onStart {
@@ -166,7 +167,7 @@ class CoinDetailsViewModel(
 
             is CoinDetailsEvent.OnIntervalChange -> getChartData(interval = uiEvent.interval)
 
-            else -> throw Throwable("Event not handled")
+            else -> super.handleEvent(uiEvent)
         }
 
     }

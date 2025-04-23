@@ -4,7 +4,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
-import com.giuseppe_longhitano.coin.coin_details.screen.CoinDetailsScreen
+import com.giuseppe_longhitano.coin.coin_details.screen.CoinDetailsContent
 import com.giuseppe_longhitano.coin.coin_details.screen.ui_model.ExpandedCoinDetails
 import com.giuseppe_longhitano.domain.model.Chart
 import com.giuseppe_longhitano.domain.model.ChartItem
@@ -19,7 +19,7 @@ import kotlin.random.Random
 @Composable
 fun CoinDetailsPreviewLoading() {
     Surface {
-        CoinDetailsScreen(state = UIState(isLoading = true)) {}
+        CoinDetailsContent(state = UIState(isLoading = true)) {}
     }
 }
 
@@ -27,7 +27,7 @@ fun CoinDetailsPreviewLoading() {
 @Composable
 fun CoinDetailsPreviewSuccess() {
     Surface {
-        CoinDetailsScreen(state = UIState(isLoading = false, data = coinDetails)){}
+        CoinDetailsContent(state = UIState(isLoading = false, data = coinDetails)){}
     }
 }
 
@@ -35,7 +35,7 @@ fun CoinDetailsPreviewSuccess() {
 @Composable
 fun CoinDetailsPreviewError() {
     Surface {
-        CoinDetailsScreen(state = UIState<ExpandedCoinDetails>(isLoading = false,error = Throwable("Ops.."))) {}
+        CoinDetailsContent(state = UIState<ExpandedCoinDetails>(isLoading = false,error = Throwable("Ops.."))) {}
     }
 }
 @Preview
@@ -43,7 +43,7 @@ fun CoinDetailsPreviewError() {
 fun CoinDetailsPreviewSuccessWhitChartError() {
     Surface {
         val chartError = UIState<Chart>(error = Throwable("Ops.."), isLoading = false)
-        CoinDetailsScreen(state = UIState<ExpandedCoinDetails>(isLoading = false, data = coinDetails.copy(chartUIState = chartError))) {}
+        CoinDetailsContent(state = UIState<ExpandedCoinDetails>(isLoading = false, data = coinDetails.copy(chartUIState = chartError))) {}
      }
 }
 

@@ -3,10 +3,12 @@ package com.giuseppe_longhitano.coin.coin_list.screen
 import androidx.lifecycle.viewModelScope
 import com.giuseppe_longhitano.arch.event.CommonEvent
 import com.giuseppe_longhitano.arch.event.CommonEvent.Retry
+import com.giuseppe_longhitano.arch.event.NavigationEvent
 import com.giuseppe_longhitano.arch.event.UIEvent
+import com.giuseppe_longhitano.coin.routing.RouteScreen
 import com.giuseppe_longhitano.domain.model.Coin
 import com.giuseppe_longhitano.domain.repositories.CoinRepository
-import com.giuseppe_longhitano.ui.ConioBaseViewModel
+import com.giuseppe_longhitano.ui.BaseViewModel
 import com.giuseppe_longhitano.ui.utils.getData
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.ListModel
 import com.giuseppe_longhitano.ui.view.widget.base.ui_model.UIState
@@ -19,7 +21,7 @@ import kotlinx.coroutines.launch
 private const val TAG = "CoinListViewModel"
 
 class CoinListViewModel(private val repository: CoinRepository) :
-    ConioBaseViewModel<ListModel<Coin>>() {
+    BaseViewModel<ListModel<Coin>>() {
 
     override val uiState = _uiState.onStart {
         getCoins()
@@ -34,48 +36,49 @@ class CoinListViewModel(private val repository: CoinRepository) :
 
     private fun getCoins() {
         viewModelScope.launch {
-            var data = _uiState.getData()
-            val shouldLoadInitially = data?.items.isNullOrEmpty() && _uiState.value.error == null
-
-            if (shouldLoadInitially) {
-                _uiState.update {
-                    it.copy(isLoading = true)
-                }
-            } else {
-                data = data?.copy(isLoading = true, error = null)
-                _uiState.update {
-                    it.copy(data = data, isLoading = false, error = null)
-                }
+            val previousData = uiState.value.copy(isLoading = true, error = null).data
+            val pageToFetch = previousData?.page ?: 1
+            _uiState.update { currentState ->
+                val isInitialLoad = currentState.data?.items.isNullOrEmpty() && currentState.error == null
+                val updatedDataModel = currentState.data?.copy(
+                    isItemsLoading = !isInitialLoad,
+                    error = null
+                )
+                currentState.copy(
+                    isLoading = isInitialLoad,
+                    data = updatedDataModel,
+                    error = null
+                )
             }
-            repository.getCoin(data?.page ?: 1).collect(::handleCoinsResult)
+            repository.getCoin(pageToFetch).collect(::handleCoinsResult)
         }
     }
 
     private fun handleCoinsResult(coinResult: Result<List<Coin>>) {
-        val data = _uiState.getData()
-        coinResult.fold(onSuccess = { coins ->
-            val newData = ListModel(
-                isLoading = false,
-                error = null,
-                items = data?.items.orEmpty() + coins,
-                page = (data?.page ?: 1).plus(1),
-                endReached = coins.isEmpty()
-            )
+        val currentData = _uiState.getData()
+        coinResult.fold(onSuccess = { newCoins ->
+            val updatedItems = currentData?.items.orEmpty() + newCoins
+            val pageToFetch = (currentData?.page ?: 0) + 1
+            val endReached = newCoins.isEmpty()
             _uiState.update {
-                it.copy(data = newData, isLoading = false)
+                it.copy(
+                    isLoading = false,
+                    data = ListModel(
+                        items = updatedItems,
+                        page = pageToFetch,
+                        endReached = endReached,
+                        isItemsLoading = false
+                    ),
+                    error = null
+                )
             }
          }, onFailure = {th->
-
-            val isPageLoading =
-                if (_uiState.value.isLoading) false else _uiState.value.isLoading
-            val pageError = if (_uiState.value.isLoading) th else _uiState.value.error
-            val newData = data?.copy(
-                isLoading = false,
-                error = pageError ?: th
-            )
-
-             _uiState.update {
-                it.copy(data = newData, isLoading = isPageLoading, error = pageError)
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    data = if (currentData?.items.isNullOrEmpty()) null else currentData?.copy(isItemsLoading = false),
+                    error = th
+                )
             }
         })
     }
@@ -84,14 +87,11 @@ class CoinListViewModel(private val repository: CoinRepository) :
 
         when (uiEvent) {
 
-            is CommonEvent.Next -> getCoins()
+            is CoinListEvent.CoinClicked -> super.handleEvent(NavigationEvent(RouteScreen.CoinDetailScreen(uiEvent.id.value)))
 
-            is Retry -> {
-                _uiState.update { it.copy(isLoading = true, error = null) }
-                getCoins()
-            }
+            is CommonEvent.Next, is Retry -> getCoins()
 
-            else -> throw Throwable("No event found for $uiEvent")
+            else -> super.handleEvent(uiEvent)
         }
 
 

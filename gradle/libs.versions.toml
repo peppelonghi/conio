@@ -29,6 +29,8 @@ compose-compiler = "1.5.15"
 coil = "2.4.0"
 nav-version = "2.8.9"
 turbine = "1.0.0"
+uiToolingPreviewAndroid = "1.8.0"
+recyclerview = "1.4.0"
 
 
 [libraries]
@@ -71,6 +73,8 @@ androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

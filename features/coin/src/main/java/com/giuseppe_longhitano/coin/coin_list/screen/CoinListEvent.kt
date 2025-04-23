@@ -3,8 +3,8 @@ package com.giuseppe_longhitano.coin.coin_list.screen
 import com.giuseppe_longhitano.arch.event.UIEvent
 import com.giuseppe_longhitano.domain.model.Id
 
-sealed interface CoinListEvent : UIEvent {
+sealed class CoinListEvent : UIEvent {
 
-    data class ClickedCoin(val id: Id) : CoinListEvent
+    data class CoinClicked(val id: Id) : CoinListEvent()
 
 }

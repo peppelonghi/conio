@@ -8,6 +8,7 @@ private const val TAG = "RouteScreen"
 
 sealed interface RouteScreen : Route {
 
+
     @Serializable
     data object CoinListScreen : RouteScreen
 

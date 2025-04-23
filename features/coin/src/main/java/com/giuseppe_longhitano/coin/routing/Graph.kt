@@ -24,6 +24,7 @@ fun NavGraphBuilder.coinFeatureGraph(
     onChangeTopBarState: (TopAppBarModel) -> Unit,
     onNavigationEvent: (Route) -> Unit
 ) {
+
     composable<CoinListScreen> {
         onChangeTopBarState.invoke(
             TopAppBarModel(
@@ -35,9 +36,9 @@ fun NavGraphBuilder.coinFeatureGraph(
 
         CoinListScreen(
             modifier = Modifier.fillMaxSize(),
-            handleEvent = { event ->
-                   onNavigationEvent.invoke(event.route)
-             },
+            onChangeRoute = { route ->
+                onNavigationEvent.invoke(route)
+            },
         )
     }
     composable<CoinDetailScreen>
@@ -55,9 +56,9 @@ fun NavGraphBuilder.coinFeatureGraph(
 
         CoinDetailsScreen(
             modifier = Modifier.fillMaxSize(),
-            handleEvent = {event->
-            onNavigationEvent.invoke(event.route)
-        })
+            onNavigationEvent = { route ->
+                onNavigationEvent.invoke(route)
+            })
     }
 }
 
