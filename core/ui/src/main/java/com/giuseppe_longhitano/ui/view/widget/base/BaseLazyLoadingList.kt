@@ -3,6 +3,7 @@ package com.giuseppe_longhitano.ui.view.widget.base
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -64,7 +65,10 @@ fun <T> BaseLazyLoadingList(
             }
             item {
                 if (data?.isLoading == true)
-                    CircularProgressIndicator()
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+
+                    }
             }
             item {
                 if (data?.error != null) {

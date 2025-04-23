@@ -45,7 +45,8 @@ fun CoinDetailsScreen(
         state = state,
         handleEvent = { event ->
             when (event) {
-                is CoinDetailsEvent  -> coinDetailsViewModel.handleEvent(event)
+
+                is CoinDetailsEvent, is CommonEvent.Retry  -> coinDetailsViewModel.handleEvent(event)
                 is NavigationEvent -> handleEvent.invoke(event)
                 else -> throw Throwable("No event found for $event")
             }
@@ -63,8 +64,7 @@ internal fun CoinDetailsScreen(
         uiState = state,
         modifier = modifier
             .fillMaxSize(),
-        handleEvent = handleEvent
-    ) { data ->
+        handleEvent = handleEvent) { data ->
         Column(
             Modifier
                 .fillMaxSize()
@@ -99,7 +99,9 @@ internal fun CoinDetailsScreen(
                 modifier = Modifier
                     .padding(top = 16.dp)
             )
-            CoinDetailsOtherInfo(coinDetails = data?.coinDetails, handleEvent = handleEvent, modifier = Modifier.fillMaxWidth().padding(8.dp))
+            CoinDetailsOtherInfo(coinDetails = data?.coinDetails, handleEvent = handleEvent, modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp))
         }
     }
 }
